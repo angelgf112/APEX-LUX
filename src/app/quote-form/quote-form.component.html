@@ -1,0 +1,64 @@
+<div class="quote-form-container">
+    <form #quoteForm="ngForm" (ngSubmit)="submitQuote(quoteForm)">
+        <mat-form-field appearance="fill">
+            <mat-label>Nombre completo</mat-label>
+            <input matInput name="fullName" #fullName="ngModel" [(ngModel)]="quoteData.fullName" required minlength="3" />
+            @if (fullName.errors?.['required']) {
+                <mat-error>Nombre requerido</mat-error>
+            }
+            @if (fullName.errors?.['minlength']) {
+                <mat-error>Mínimo 3 caracteres</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput type="email" name="email" #email="ngModel" [(ngModel)]="quoteData.email" required email />
+            @if (email.errors?.['required']) {
+                <mat-error>Correo requerido</mat-error>
+            }
+            @if (email.errors?.['email']) {
+                <mat-error>Formato inválido</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Tipo de financiamiento</mat-label>
+            <mat-select name="financingType" #financingType="ngModel" [(ngModel)]="quoteData.financingType" required>
+                @for (option of financingOptions; track option) {
+                    <mat-option [value]="option">{{ option }}</mat-option>
+                }
+            </mat-select>
+            @if (financingType.errors?.['required']) {
+                <mat-error>Selecciona un tipo</mat-error>
+            }
+        </mat-form-field>
+
+        <label>¿Acepta recibir promociones?</label>
+        <mat-radio-group name="promotions" #promotions="ngModel" [(ngModel)]="quoteData.promotions" required>
+            <mat-radio-button value="yes">Sí</mat-radio-button>
+            <mat-radio-button value="no">No</mat-radio-button>
+        </mat-radio-group>
+        @if (promotions.errors?.['required']) {
+            <div class="error">Selecciona una opción</div>
+        }
+
+        <mat-form-field appearance="fill">
+            <mat-label>Fecha deseada de contacto</mat-label>
+            <input matInput [matDatepicker]="picker" [min]="today" name="contactDate" #contactDate="ngModel"
+                [(ngModel)]="quoteData.contactDate" required />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (contactDate.errors?.['required']) {
+                <mat-error>Fecha requerida</mat-error>
+            }
+            @if (contactDate.errors?.['matDatepickerMin']) {
+                <mat-error>No puede ser anterior a hoy</mat-error>
+            }
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="!quoteForm.valid">
+            Enviar Cotización
+        </button>
+    </form>
+</div>

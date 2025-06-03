@@ -1,0 +1,104 @@
+<!-- [formGroup] vincula el formulario al objeto contactForm del componente -->
+<!-- (ngSubmit) ejecuta la funcion onSubmit() al hacer submit -->
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+  <!-- Titulo del formulario -->
+  <h2>Envianos un mensaje</h2>
+
+  <!-- Campo: Nombre completo -->
+  <mat-form-field>
+    <mat-label>Nombre completo</mat-label>
+    <!-- Campo de entrada vinculado al control 'name' -->
+    <input matInput formControlName="name" required />
+    <!-- Muestra error si el campo esta vacio -->
+    @if (contactForm.get('name')?.hasError('required')) {
+    <mat-error>Este campo es obligatorio</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- Campo: Correo electronico -->
+  <mat-form-field>
+    <mat-label>Correo electronico</mat-label>
+    <!-- Campo de entrada tipo email vinculado al control 'email' -->
+    <input matInput formControlName="email" type="email" required />
+    <!-- Error si el campo esta vacio -->
+    @if (contactForm.get('email')?.hasError('required')) {
+    <mat-error>Este campo es obligatorio</mat-error>
+    }
+    <!-- Error si el formato del correo no es valido -->
+    @if (contactForm.get('email')?.hasError('email')) {
+    <mat-error>Ingresa un correo valido</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- Campo: Asunto con opciones de seleccion -->
+  <mat-form-field>
+    <mat-label>Asunto</mat-label>
+    <!-- Select vinculado al control 'subject' -->
+    <mat-select formControlName="subject" required>
+      <!-- Genera opciones a partir del arreglo 'subjects' -->
+      @for (subject of subjects; track subject) {
+      <mat-option [value]="subject">{{ subject }}</mat-option>
+      }
+    </mat-select>
+    <!-- Error si no se selecciona ningun asunto -->
+    @if (contactForm.get('subject')?.hasError('required')) {
+    <mat-error>Selecciona un asunto</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- Campo: Fecha de contacto -->
+  <mat-form-field>
+    <mat-label>Fecha de contacto deseada</mat-label>
+    <!-- Campo de fecha vinculado al control 'date' -->
+    <input matInput [matDatepicker]="picker" formControlName="date" required />
+    <!-- Boton para abrir el selector de fecha -->
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <!-- Componente del selector de fecha -->
+    <mat-datepicker #picker></mat-datepicker>
+    <!-- Error si el campo esta vacio -->
+    @if (contactForm.get('date')?.hasError('required')) {
+    <mat-error>Selecciona una fecha</mat-error>
+    }
+    <!-- Error si la fecha es anterior a hoy -->
+    @if (contactForm.get('date')?.hasError('invalidDate')) {
+    <mat-error>La fecha no puede ser anterior a hoy</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- Campo: Metodo de contacto preferido -->
+  <div class="form-group">
+    <label>¿Como prefieres que te contactemos?</label>
+    <!-- Grupo de radios vinculado al control 'contactMethod' -->
+    <mat-radio-group formControlName="contactMethod" required>
+      <mat-radio-button value="phone">Telefono</mat-radio-button>
+      <mat-radio-button value="email">Correo electronico</mat-radio-button>
+      <mat-radio-button value="whatsapp">WhatsApp</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <!-- Campo: Mensaje -->
+  <mat-form-field>
+    <mat-label>Mensaje</mat-label>
+    <!-- Area de texto vinculada al control 'message' -->
+    <textarea matInput formControlName="message" required></textarea>
+    <!-- Error si esta vacio -->
+    @if (contactForm.get('message')?.hasError('required')) {
+    <mat-error>Escribe tu mensaje</mat-error>
+    }
+    <!-- Error si tiene menos de 20 caracteres -->
+    @if (contactForm.get('message')?.hasError('minlength')) {
+    <mat-error>El mensaje debe tener al menos 20 caracteres</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- Boton para enviar el formulario -->
+  <!-- El boton se desactiva si el formulario no es valido -->
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="!contactForm.valid"
+  >
+    Enviar mensaje
+  </button>
+</form>

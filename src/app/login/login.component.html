@@ -1,0 +1,131 @@
+<div class="login-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        {{ isRegisterMode ? "Registrar Usuario" : "Iniciar Sesión" }}
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- FORMULARIO LOGIN -->
+      <form
+        *ngIf="!isRegisterMode"
+        (ngSubmit)="login()"
+        #loginForm="ngForm"
+        novalidate
+      >
+        <mat-form-field appearance="fill">
+          <mat-label>Correo</mat-label>
+          <input
+            matInput
+            [(ngModel)]="email"
+            name="email"
+            required
+            email
+            autocomplete="username"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            required
+            autocomplete="current-password"
+          />
+        </mat-form-field>
+
+        <div #captchaContainer class="g-recaptcha"></div>
+
+        <p *ngIf="errorCaptcha" class="error-msg">{{ errorCaptcha }}</p>
+
+        <button mat-raised-button color="primary" type="submit">Entrar</button>
+      </form>
+
+      <p *ngIf="error" class="error-msg">Usuario o contraseña incorrectos</p>
+
+      <p *ngIf="mostrarBotonDesbloqueo" class="error-msg">
+        Cuenta bloqueada por 3 intentos fallidos.
+        <button mat-button color="warn" (click)="resetPassword()">
+          Restablecer contraseña
+        </button>
+      </p>
+
+      <p *ngIf="mensajeExito" class="success-msg">{{ mensajeExito }}</p>
+
+      <!-- FORMULARIO REGISTRO -->
+      <form
+        *ngIf="isRegisterMode"
+        (ngSubmit)="register()"
+        #registerForm="ngForm"
+        novalidate
+      >
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre Completo</mat-label>
+          <input
+            matInput
+            [(ngModel)]="name"
+            name="name"
+            required
+            autocomplete="name"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Correo</mat-label>
+          <input
+            matInput
+            [(ngModel)]="regEmail"
+            name="regEmail"
+            required
+            email
+            autocomplete="email"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            type="password"
+            [(ngModel)]="regPassword"
+            name="regPassword"
+            required
+            autocomplete="new-password"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Confirmar Contraseña</mat-label>
+          <input
+            matInput
+            type="password"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            required
+            autocomplete="new-password"
+          />
+        </mat-form-field>
+
+        <p *ngIf="regError" class="error-msg">{{ regError }}</p>
+
+        <button mat-raised-button color="primary" type="submit">
+          Registrar
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="toggleMode()">
+        {{
+          isRegisterMode
+            ? "¿Ya tienes cuenta? Iniciar sesión"
+            : "Registrar cuenta"
+        }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

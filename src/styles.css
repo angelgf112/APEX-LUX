@@ -1,0 +1,339 @@
+/* styles.css */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #1e1e1e;
+    /* Gris más oscuro para mayor contraste */
+    --secondary-color: #252525;
+    /* Gris oscuro con tono más cálido */
+    --accent-color: #8ab4f8;
+    /* Azul pastel más vibrante */
+    --accent-hover: #b6d0ff;
+    /* Variante más clara para hover */
+    --text-color: #f0f0f0 !important;
+    /* Blanco más suave */
+    --text-secondary: #b0b0b0;
+    /* Gris más claro para mejor legibilidad */
+    --bg-color: #121212;
+    /* Fondo oscuro base */
+    --nav-bg-color: #1a1a1a;
+    /* Barra de navegación más contrastada */
+    --card-bg: #252525;
+    /* Fondo de tarjetas más consistente */
+    --border-color: #3a3a3a;
+    /* Bordes más sutiles */
+    --hover-color: #3a3a3a;
+    /* Color de hover más definido */
+    --elevation-1: 0 2px 4px rgba(0, 0, 0, 0.3);
+    /* Sombras más pronunciadas */
+    --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.25);
+    --elevation-3: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-color) !important;
+    /* color: var(--text-color) !important; */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    /* Mejor renderizado de fuentes */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+
+
+/* Tipografía mejorada con jerarquía clara */
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.25px;
+    margin-bottom: 1.25rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+p {
+    font-weight: 300;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+/* Efectos de transición más refinados */
+* {
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Componentes Material personalizados */
+.mat-toolbar {
+    background-color: var(--nav-bg-color) !important;
+    color: var(--text-color) !important;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 2rem;
+    box-shadow: var(--elevation-1);
+}
+
+.mat-card {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--elevation-1) !important;
+    overflow: hidden;
+}
+
+/* Efecto de hover en cards más sutil */
+.mat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--elevation-3) !important;
+    border-color: var(--accent-color) !important;
+}
+
+/* Botones y iconos con más personalidad */
+.mat-button,
+.mat-icon-button,
+.mat-raised-button {
+    transition: all 0.25s ease !important;
+    border-radius: 8px !important;
+}
+
+.mat-button:hover,
+.mat-icon-button:hover {
+    background-color: var(--hover-color) !important;
+    color: var(--accent-color) !important;
+}
+
+.mat-raised-button {
+    background-color: var(--accent-color) !important;
+    color: var(--primary-color) !important;
+}
+
+.mat-raised-button:hover {
+    background-color: var(--accent-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--elevation-2);
+}
+
+/* Inputs y formularios más elegantes */
+.mat-form-field {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.mat-input-element {
+    caret-color: var(--accent-color) !important;
+    color: var(--text-color) !important;
+}
+
+.mat-form-field-label {
+    color: var(--text-secondary) !important;
+}
+
+.mat-form-field-underline {
+    background-color: var(--border-color) !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: var(--border-color) !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: var(--accent-color) !important;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: white;
+}
+
+/* Efectos de overlay para modales/dialogs */
+.mat-dialog-container {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--elevation-3) !important;
+}
+
+/* Mejoras para tabs */
+.mat-tab-group {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.mat-tab-header {
+    background-color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.mat-tab-label {
+    color: var(--text-secondary);
+    opacity: 1 !important;
+}
+
+.mat-tab-label-active {
+    color: var(--accent-color) !important;
+}
+
+.mat-ink-bar {
+    background-color: var(--accent-color) !important;
+    height: 3px !important;
+}
+
+/* Filtros para daltonismo */
+.main-content.daltonism-protanopia {
+    filter: url('#protanopia-filter');
+}
+
+.main-content.daltonism-deuteranopia {
+    filter: url('#deuteranopia-filter');
+}
+
+.main-content.daltonism-tritanopia {
+    filter: url('#tritanopia-filter');
+}
+
+
+svg.filters {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+
+/* Modo texto grande - aplicado a toda la aplicación */
+.large-text-mode {
+    font-size: 1.5rem !important;
+    line-height: 1.6 !important;
+}
+
+/* Ajustes específicos para elementos que necesitan más espacio */
+.large-text-mode .mat-toolbar,
+.large-text-mode .mat-button,
+.large-text-mode .mat-menu-item {
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
+/* Ajuste para Material inputs */
+.large-text-mode .mat-form-field {
+    font-size: 1.1em !important;
+}
+
+/* Ajuste para Material tabs */
+.large-text-mode .mat-tab-label {
+    font-size: 1.1em !important;
+    padding: 0 1.5em !important;
+}
+
+/* Fuentes globales */
+
+body.font-times-italic {
+  font-family: 'Times New Roman', Times, serif !important;
+  font-style: italic !important;
+  font-weight: 500 !important;
+}
+
+.font-dyslexic {
+    font-family: 'OpenDyslexic', sans-serif !important;
+    letter-spacing: 0.03em !important;
+}
+
+.font-arial {
+    font-family: Arial, sans-serif !important;
+}
+
+.font-verdana {
+    font-family: Verdana, sans-serif !important;
+    line-height: 1.6 !important;
+}
+
+.font-comic {
+    font-family: "Comic Sans MS", cursive, sans-serif !important;
+}
+
+/* Importar OpenDyslexic (si no está instalada) */
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('https://cdn.jsdelivr.net/open-dyslexic/1.0.0/OpenDyslexic-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body.font-times-italic {
+  font-family: 'Times New Roman', Times, serif !important;
+  font-style: italic !important;
+  font-weight: 500 !important;
+}
+/* Fuentes globales - Aplican a todo el body */
+body.font-dyslexic {
+    font-family: 'OpenDyslexic', sans-serif !important;
+    letter-spacing: 0.03em !important;
+}
+
+body.font-arial {
+    font-family: Arial, sans-serif !important;
+}
+
+body.font-verdana {
+    font-family: Verdana, sans-serif !important;
+    line-height: 1.6 !important;
+}
+
+body.font-comic {
+    font-family: "Comic Sans MS", cursive, sans-serif !important;
+}
+
+/* Importar OpenDyslexic desde CDN */
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('https://cdn.jsdelivr.net/open-dyslexic/1.0.0/OpenDyslexic-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Asegurar que Material Icons mantengan su fuente */
+body.font-dyslexic .material-icons,
+body.font-arial .material-icons,
+body.font-verdana .material-icons,
+body.font-comic .material-icons {
+    font-family: 'Material Icons' !important;
+}
+
+/* svg.filters filter {
+  filterUnits="objectBoundingBox" x="0" y="0" width="1" height="1"
+} */

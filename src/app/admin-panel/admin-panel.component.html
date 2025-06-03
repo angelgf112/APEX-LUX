@@ -1,0 +1,79 @@
+<h2>Cotizaciones</h2>
+@if (cotizaciones.length > 0) {
+<div>
+  @for (cotizacion of cotizaciones; track cotizacion.id; let i = $index) {
+  <mat-card class="admin-card">
+    @if (cotizacion.isEditing) {
+    <div>
+      @for (key of cotizacionKeys(cotizacion); track key) {
+      <div>
+        <label>{{ key }}:</label>
+        @if (key !== 'isEditing') {
+        <!-- Aquí se utiliza el two-way data binding con ngModel -->
+        <!-- El valor del campo de entrada se enlaza bidireccionalmente con la propiedad cotizacion[key] -->
+        <input [(ngModel)]="cotizacion[key]" />
+        }
+      </div>
+      }
+      <button mat-button color="accent" (click)="saveCotizacion(i)">
+        Guardar
+      </button>
+      <button mat-button color="warn" (click)="cancelEditCotizacion(i)">
+        Cancelar
+      </button>
+    </div>
+    } @else {
+    <pre>{{ cotizacion | json }}</pre>
+    <button mat-button color="primary" (click)="editCotizacion(i)">
+      Editar
+    </button>
+    <button mat-button color="warn" (click)="deleteCotizacion(i)">
+      Eliminar
+    </button>
+    }
+  </mat-card>
+  }
+</div>
+} @else {
+<p>No hay cotizaciones registradas.</p>
+}
+
+<hr />
+
+<h2>Solicitudes de Contacto</h2>
+@if (contactos.length > 0) {
+<div>
+  @for (contacto of contactos; track contacto.id; let i = $index) {
+  <mat-card class="admin-card">
+    @if (contacto.isEditing) {
+    <div>
+      @for (key of cotizacionKeys(contacto); track key) {
+      <div>
+        <label>{{ key }}:</label>
+        @if (key !== 'isEditing') {
+        <!-- Aquí también se utiliza el two-way data binding con ngModel -->
+        <!-- El valor del campo de entrada se enlaza bidireccionalmente con la propiedad contacto[key] -->
+        <input [(ngModel)]="contacto[key]" />
+        }
+      </div>
+      }
+      <button mat-button color="accent" (click)="saveContacto(i)">
+        Guardar
+      </button>
+      <button mat-button color="warn" (click)="cancelEditContacto(i)">
+        Cancelar
+      </button>
+    </div>
+    } @else {
+    <pre>{{ contacto | json }}</pre>
+    <button mat-button color="primary" (click)="editContacto(i)">Editar</button>
+    <button mat-button color="warn" (click)="deleteContacto(i)">
+      Eliminar
+    </button>
+    }
+  </mat-card>
+  }
+</div>
+} @else {
+<p>No hay contactos registrados.</p>
+}

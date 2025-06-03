@@ -1,0 +1,430 @@
+/* header.component.css */
+.creative-header {
+    background: linear-gradient(135deg, black 0%, #1a1a1a 100%) !important;
+    color: var(--text-color) !important;
+    height: 80px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.creative-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    opacity: 0.5;
+}
+
+.header-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.brand-logo:hover {
+    transform: translateY(-2px);
+}
+
+.logo-icon {
+    font-size: 2.5rem !important;
+    width: auto !important;
+    height: auto !important;
+    color: var(--accent-color);
+    filter: drop-shadow(0 0 8px rgba(138, 180, 248, 0.4));
+    transition: all 0.3s ease;
+}
+
+.brand-logo:hover .logo-icon {
+    transform: rotate(-10deg);
+    filter: drop-shadow(0 0 12px rgba(138, 180, 248, 0.6));
+}
+
+.brand-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    background: linear-gradient(to right, var(--accent-color), #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.brand-subtitle {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-left: 0.5rem;
+    align-self: flex-end;
+    margin-bottom: 0.25rem;
+}
+
+.slogan-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.slogan {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background-color: rgba(138, 180, 248, 0.1);
+    border: 1px solid rgba(138, 180, 248, 0.2);
+    transition: all 0.4s ease;
+}
+
+.slogan::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(138, 180, 248, 0.1),
+            transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.slogan:hover {
+    color: var(--text-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(138, 180, 248, 0.2);
+}
+
+.slogan:hover::before {
+    transform: translateX(100%);
+}
+
+@media(max-width: 625px) {
+    .slogan-container span {
+        font-size: 10px;
+    }
+}
+
+/* Efecto de partículas (opcional) */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: float 15s infinite linear;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .brand-name {
+        font-size: 1.6rem;
+    }
+
+    .slogan {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        min-height: 100px;
+        /* deja que crezca si el contenido lo requiere */
+        padding: 0.5rem 0;
+    }
+
+    .brand-logo {
+        margin-top: 0.5rem;
+    }
+
+    .brand-subtitle {
+        display: none;
+    }
+
+    .slogan {
+        font-size: 0.9rem;
+        padding: 0.25rem 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .creative-header {
+        min-height: 100px;
+        /* deja que crezca si el contenido lo requiere */
+        padding: 0.5rem 0;
+    }
+
+    .header-container {
+        padding: 0 1rem;
+    }
+
+    .brand-name {
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+    }
+
+    .logo-icon {
+        font-size: 2rem !important;
+    }
+
+    .slogan {
+        font-size: 0.8rem;
+    }
+}
+
+/* Menú principal */
+.accessibility-menu {
+     transform-style: preserve-3d; 
+    filter: none !important;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    z-index: 2001;
+    
+}
+
+/* Botón hamburguesa */
+.menu-toggle {
+    filter: none !important;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 2000 !important;
+}
+
+.menu-toggle:hover {
+    transform: scale(1.1);
+}
+
+
+.main-options {
+    display: flex;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px;
+    border-radius: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease;
+}
+
+.main-options button {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.main-options button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+.reader-suboptions {
+    display: flex;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: -10px;
+    animation: slideUp 0.3s ease;
+}
+
+.reader-suboptions button {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.daltonism-suboptions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px;
+    border-radius: 20px;
+    margin-top: 10px;
+    animation: fadeIn 0.3s ease;
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    z-index: 1001;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.daltonism-suboptions button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: all 0.2s;
+}
+
+.daltonism-suboptions button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.daltonism-suboptions button mat-icon {
+    margin-right: 8px;
+}
+
+.daltonism-suboptions button.active {
+    background: rgba(138, 180, 248, 0.2) !important;
+    border-left: 3px solid var(--accent-color);
+}
+
+
+.high-contrast {
+  filter: contrast(200%) !important; 
+  background-color: #000 !important;
+  color: #fff !important; 
+}
+
+
+
+.font-submenu {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 12px;
+  padding: 10px;
+  min-width: 180px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.font-submenu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  color: white;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.font-submenu button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.font-submenu button.active {
+  background: rgba(138, 180, 248, 0.2);
+  border-left: 3px solid var(--accent-color);
+}
+
+.font-submenu mat-icon {
+  font-family: 'Material Icons' !important;
+}
+
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

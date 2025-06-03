@@ -1,0 +1,135 @@
+.contact-info {
+    background-color: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--elevation-1);
+    transition: all 0.3s ease;
+}
+
+.contact-info:hover {
+    box-shadow: var(--elevation-2);
+    border-color: var(--accent-color);
+}
+
+.contact-info h2 {
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.contact-info h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: var(--accent-color);
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.info-item mat-icon {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    width: auto;
+    height: auto;
+    margin-top: 0.25rem;
+}
+
+.info-item p {
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Estilos para los iconos de contacto */
+.perfil__icono {
+    display: inline-block;
+    margin: 10px 15px 10px 0;
+}
+
+.perfil__icono a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.perfil__icono .icono-instagram {
+    color: #E1306C;
+    font-size: 24px;
+}
+
+.perfil__icono a[href^="mailto"] mat-icon {
+    color: #D44638;
+}
+
+.perfil__icono a[href*="whatsapp"] mat-icon {
+    color: #25D366;
+}
+
+.perfil__icono a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.perfil__icono a[href*="instagram"]:hover {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+.perfil__icono a[href*="instagram"]:hover .icono-instagram {
+    color: white;
+}
+
+.perfil__icono a[href^="mailto"]:hover {
+    background-color: #D44638;
+}
+
+.perfil__icono a[href^="mailto"]:hover mat-icon {
+    color: white;
+}
+
+.perfil__icono a[href*="whatsapp"]:hover {
+    background-color: #25D366;
+}
+
+.perfil__icono a[href*="whatsapp"]:hover mat-icon {
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .contact-info {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-info {
+        order: 2;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-info {
+        padding: 1.5rem;
+    }
+
+    .info-item {
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+}

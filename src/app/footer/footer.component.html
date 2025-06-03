@@ -1,0 +1,47 @@
+<mat-toolbar class="university-footer">
+  <div class="footer-container">
+    <!-- Sección del equipo -->
+    <div class="team-section">
+      <h3 class="section-title">Equipo de Desarrollo</h3>
+      <div class="team-members">
+        <!-- Aquí usamos interpolación y property para mostrar los datos de cada miembro del equipo -->
+        @for (member of teamMembers; track member.name) {
+        <div class="team-member">
+          <div class="member-photo">
+            <img
+              [src]="member.photoUrl"
+              alt="{{ member.name }}"
+              class="member-image"
+              onerror="this.src='assets/images/default-profile.png'"
+            />
+          </div>
+          <div class="member-info">
+            <h4>{{ member.name }}</h4>
+            <p>{{ member.role }}</p>
+            <p>{{ member.degree }}</p>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Resto del footer permanece igual -->
+    <div class="university-section">
+      <div class="university-logo">
+        <mat-icon class="logo-icon">school</mat-icon>
+        <span>UAA</span>
+      </div>
+      <div class="university-info">
+        <h3>Proyecto Académico</h3>
+        <p>Desarrollado para la materia de Tecnologías Web</p>
+        <p>Universidad Autónoma de Aguascalientes</p>
+        <p>2025</p>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+  <div class="footer-bottom">
+    <p>&copy; {{ currentYear }} ApexAutomotive - Proyecto Universitario.</p>
+  </div>
+</mat-toolbar>

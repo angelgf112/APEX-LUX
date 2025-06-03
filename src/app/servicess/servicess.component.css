@@ -1,0 +1,311 @@
+.services-container
+{
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: var(--bg-color);
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+/* Título de página */
+.page-title
+{
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    font-weight: 500;
+    color: var(--text-color);
+    letter-spacing: 0.5px;
+}
+
+.page-title::after
+{
+    content: '';
+    display: block;
+    width: 120px;
+    height: 4px;
+    background: var(--accent-color);
+    margin: 1.5rem auto 0;
+    border-radius: 4px;
+    opacity: 0.8;
+}
+
+/* Mensajes de estado */
+.loading-message
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 3rem;
+    gap: 1.5rem;
+    color: var(--text-color);
+}
+
+.error-message
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 3rem;
+    gap: 1.5rem;
+    color: #ff6b6b;
+}
+
+.no-results
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 3rem;
+    gap: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.loading-message mat-spinner,
+.error-message mat-icon,
+.no-results mat-icon
+{
+    margin-bottom: 1rem;
+}
+
+.error-message mat-icon
+{
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+}
+
+.no-results mat-icon
+{
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+    color: var(--text-secondary);
+}
+
+/* Listado de servicios - Acordeón mejorado */
+.services-accordion
+{
+    display: block;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.mat-expansion-panel
+{
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 10px !important;
+    margin-bottom: 1rem;
+    box-shadow: var(--elevation-1) !important;
+    transition: all 0.3s ease !important;
+    overflow: hidden;
+}
+
+.mat-expansion-panel:not([class*='mat-elevation-z'])
+{
+    box-shadow: var(--elevation-1) !important;
+}
+
+.mat-expansion-panel:hover
+{
+    border-color: var(--accent-color) !important;
+    box-shadow: var(--elevation-2) !important;
+}
+
+.mat-expansion-panel-header
+{
+    font-weight: 500 !important;
+    font-size: 1.1rem !important;
+    color: var(--text-color) !important;
+    padding: 1.25rem 1.5rem !important;
+    height: auto !important;
+    transition: all 0.2s ease;
+}
+
+.mat-expansion-panel-header:hover
+{
+    background-color: rgba(138, 180, 248, 0.08) !important;
+}
+
+.mat-expansion-panel-header.mat-expanded
+{
+    background-color: rgba(138, 180, 248, 0.05) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.service-icon
+{
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.service-description
+{
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 1rem 0 1.5rem;
+    font-size: 1rem;
+    padding: 0 0.5rem;
+}
+
+.mat-action-row
+{
+    border-top-color: var(--border-color) !important;
+    padding: 1rem !important;
+    margin: 0 0.5rem;
+    justify-content: flex-end;
+}
+
+.mat-action-row button
+{
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Componente FAQ */
+app-faq
+{
+    display: block;
+    margin-top: 4rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px)
+{
+    .services-container
+    {
+        padding: 1.5rem;
+    }
+
+    .page-title
+    {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px)
+{
+    .page-title
+    {
+        font-size: 2rem;
+    }
+
+    .search-container .mat-form-field-flex
+    {
+        height: 50px !important;
+        padding: 0 1.25rem !important;
+    }
+
+    .search-container .mat-input-element
+    {
+        font-size: 1rem !important;
+    }
+
+    .search-container .mat-icon
+    {
+        font-size: 1.4rem !important;
+    }
+
+    .mat-expansion-panel-header
+    {
+        padding: 1rem !important;
+        font-size: 1rem !important;
+    }
+
+    .service-icon
+    {
+        font-size: 1.3rem;
+        margin-right: 0.75rem;
+    }
+}
+
+@media (max-width: 480px)
+{
+    .services-container
+    {
+        padding: 1rem;
+    }
+
+    .page-title
+    {
+        font-size: 1.8rem;
+    }
+
+    .page-title::after
+    {
+        width: 80px;
+        height: 3px;
+        margin: 1rem auto 0;
+    }
+
+    .search-container .mat-form-field-flex
+    {
+        padding: 0 1rem !important;
+    }
+
+    .mat-expansion-panel-header
+    {
+        padding: 0.75rem !important;
+    }
+
+    .service-description
+    {
+        font-size: 0.95rem;
+    }
+}
+
+.custom-search
+{
+    border-radius: 50px;
+    overflow: hidden;
+    background-color: #222;
+    border: 1px solid var(--border-color);
+}
+
+.custom-search .form-control
+{
+    background-color: #222;
+    color: var(--text-color);
+    border: none;
+    box-shadow: none;
+    padding: 0.75rem 1rem;
+}
+
+.custom-search .form-control:focus
+{
+    background-color: #222;
+    color: var(--text-color);
+    outline: none;
+    box-shadow: none;
+}
+
+.custom-search .input-group-text
+{
+    background-color: transparent;
+    border: none;
+    color: var(--accent-color);
+    padding-right: 1rem;
+}
+
+.mat-expansion-panel-header .mat-content,
+.mat-expansion-panel-header .mat-title,
+.mat-expansion-panel-header
+{
+    color: #ffffff !important;
+}
+
+mat-panel-title
+{
+    color: #ffffff !important;
+}

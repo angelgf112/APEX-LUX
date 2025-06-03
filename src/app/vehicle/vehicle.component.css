@@ -1,0 +1,261 @@
+/* ------------------- VARIABLES ------------------- */
+:root {
+    --accent-rgb: 138, 180, 248; /* Para efectos de transparencia */
+  }
+  
+  /* ------------------- ESTILOS BASE ------------------- */
+  .vehicles-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+  
+  .page-title {
+    text-align: center;
+    margin: 0 auto 3rem;
+    color: var(--accent-color);
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    position: relative;
+    max-width: 800px;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 3px;
+      background: var(--accent-color);
+      margin: 1rem auto 0;
+      border-radius: 3px;
+    }
+  }
+  
+  /* ------------------- FILTROS ------------------- */
+  .filter-section {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+    
+    mat-form-field {
+      width: 300px;
+      
+      .mat-select-arrow-wrapper {
+        color: var(--accent-color);
+      }
+    }
+  }
+  
+  /* ------------------- GRILLA DE VEHÍCULOS ------------------- */
+  .vehicles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
+    padding: 0 1rem;
+  }
+  
+  /* ------------------- TARJETA DE VEHÍCULO ------------------- */
+  .vehicle-card {
+    background-color: var(--card-bg) !important;
+    border-radius: 12px !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease !important;
+    overflow: hidden;
+    box-shadow: var(--elevation-1) !important;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+  
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-color), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+  
+    &:hover {
+      transform: translateY(-8px) !important;
+      box-shadow: var(--elevation-3) !important;
+      border-color: var(--accent-color) !important;
+  
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+  
+  /* ------------------- CONTENIDO DE LA TARJETA ------------------- */
+  mat-card-content {
+    padding: 1.5rem !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-color);
+    }
+    
+    .price {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin: 1rem 0;
+    }
+  }
+  
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: auto;
+    
+    p {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      
+      mat-icon {
+        color: var(--accent-color);
+        font-size: 1.4rem;
+        width: auto;
+        height: auto;
+      }
+    }
+  }
+  
+  /* ------------------- FORMULARIO DE COTIZACIÓN ------------------- */
+  .quote-form-container {
+    padding: 1.5rem;
+    background: rgba(var(--accent-rgb), 0.05);
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+  
+      mat-form-field {
+        width: 100%;
+        
+        .mat-form-field-wrapper {
+          padding-bottom: 0;
+        }
+      }
+    }
+    
+    button[type="submit"] {
+      margin-top: 1rem;
+      width: 100%;
+    }
+  }
+  
+  /* ------------------- ESTADOS ESPECIALES ------------------- */
+  .sold-card {
+    opacity: 0.6;
+    filter: grayscale(80%);
+    pointer-events: none;
+    
+    &::after {
+      content: "VENDIDO";
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: #ff4757;
+      color: white;
+      padding: 0.5rem 1.25rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      z-index: 2;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .price {
+      color: #666 !important;
+      text-decoration: line-through;
+    }
+  }
+  
+  .highlighted-card {
+    border: 2px solid var(--accent-color) !important;
+    animation: highlight-pulse 2s infinite;
+    
+    &::before {
+      background: linear-gradient(90deg, #FFD700, transparent) !important;
+      opacity: 1 !important;
+    }
+  }
+  
+  /* ------------------- EFECTOS VISUALES ------------------- */
+  @keyframes highlight-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(var(--accent-rgb), 0); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0); }
+  }
+  
+  .offer-tag {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    z-index: 2;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+  }
+  
+  /* ------------------- RESPONSIVE ------------------- */
+  @media (max-width: 768px) {
+    .vehicles-container {
+      padding: 2rem 1rem;
+    }
+    
+    .vehicles-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .vehicle-card {
+      min-height: auto;
+    }
+    
+    .specs {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .page-title {
+      font-size: 2rem;
+    }
+    
+    .filter-section {
+      mat-form-field {
+        width: 100%;
+      }
+    }
+  }
+
+mat-card-actions {
+  display: flex;
+  padding: 1rem 1.5rem;
+}
+
+mat-card-actions button:last-child {
+  margin-left: auto;
+}
+

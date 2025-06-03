@@ -1,0 +1,83 @@
+<mat-toolbar class="creative-header">
+  <div class="particles">
+    @for (particle of particles; track particle) {
+    <div class="particle" [style.left]="particle.x + '%'" [style.top]="particle.y + '%'"
+      [style.width]="particle.size + 'px'" [style.height]="particle.size + 'px'"
+      [style.animation-delay]="particle.delay + 's'"></div>
+    }
+  </div>
+
+  <div class="header-container">
+    <div class="brand-logo">
+      <mat-icon class="logo-icon">sports_motorsports</mat-icon>
+      <span class="brand-name">APEX</span>
+      <span class="brand-subtitle">AUTOMOTIVE</span>
+    </div>
+    <div class="slogan-container">
+      <span class="slogan">Más que autos, experiencias al límite</span>
+    </div>
+  </div>
+
+  <div class="accessibility-menu">
+    <button class="menu-toggle" (click)="toggleMenu()" aria-label="Menú de accesibilidad"
+      [attr.aria-expanded]="isMenuOpen">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+
+    <div class="main-options" *ngIf="isMenuOpen">
+      <button (click)="toggleScreenReader()" aria-label="Lector de pantalla">
+        <mat-icon>volume_up</mat-icon>
+      </button>
+      <button (click)="toggleDaltonismMenu($event)" aria-label="Modos de daltonismo">
+        <mat-icon>color_lens</mat-icon>
+      </button>
+      <button (click)="toggleTextSize()" [attr.aria-pressed]="isLargeText" aria-label="Alternar tamaño de texto">
+        <mat-icon>format_size</mat-icon>
+        <span class="sr-only">{{isLargeText ? 'Desactivar' : 'Activar'}} texto grande</span>
+      </button>
+      <button (click)="toggleFontMenu($event)" [attr.aria-expanded]="isFontMenuOpen" aria-label="Cambiar tipografía">
+        <mat-icon>font_download</mat-icon>
+      </button>
+    </div>
+
+    <div class="reader-suboptions" *ngIf="isScreenReaderActive">
+      <button (click)="startReading()" aria-label="Comenzar lectura">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button (click)="pauseReading()" aria-label="Pausar lectura">
+        <mat-icon>pause</mat-icon>
+      </button>
+      <button (click)="stopReading()" aria-label="Detener lectura">
+        <mat-icon>stop</mat-icon>
+      </button>
+    </div>
+
+    <div class="daltonism-suboptions" *ngIf="isDaltonismMenuOpen">
+      <button (click)="applyFilter('protanopia')" aria-label="Protanopia">
+        <mat-icon>visibility</mat-icon>
+        <span>Protanopia</span>
+      </button>
+      <button (click)="applyFilter('deuteranopia')" aria-label="Deuteranopia">
+        <mat-icon>visibility</mat-icon>
+        <span>Deuteranopia</span>
+      </button>
+      <button (click)="applyFilter('tritanopia')" aria-label="Tritanopia">
+        <mat-icon>visibility</mat-icon>
+        <span>Tritanopia</span>
+      </button>
+      <button (click)="resetFilter()" aria-label="Restablecer colores">
+        <mat-icon>refresh</mat-icon>
+        <span>Original</span>
+      </button>
+    </div>
+
+    <div class="font-submenu" *ngIf="isFontMenuOpen">
+      <button *ngFor="let font of availableFonts" (click)="changeFont(font)"
+        [class.active]="currentFont.value === font.value">
+        <mat-icon>text_format</mat-icon>
+        <span>{{font.name}}</span>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>

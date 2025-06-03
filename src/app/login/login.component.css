@@ -1,0 +1,253 @@
+/* login.component.css */
+.login-container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    background-image:
+        radial-gradient(circle at 25% 25%,
+            rgba(138, 180, 248, 0.08) 0%,
+            transparent 50%),
+        radial-gradient(circle at 75% 75%,
+            rgba(138, 180, 248, 0.05) 0%,
+            transparent 50%);
+}
+
+mat-card
+{
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem;
+    margin: 1rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+mat-card:hover
+{
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent-color);
+}
+
+mat-card::before
+{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-color), transparent);
+}
+
+mat-card-header
+{
+    justify-content: center;
+    margin-bottom: 2rem;
+    padding: 0;
+}
+
+mat-card-title
+{
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-color);
+    letter-spacing: -0.5px;
+    position: relative;
+}
+
+mat-card-title::after
+{
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: var(--accent-color);
+    border-radius: 2px;
+}
+
+mat-card-content
+{
+    padding: 0;
+}
+
+form
+{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+mat-form-field
+{
+    width: 100%;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex
+{
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex:hover
+{
+    border-color: var(--accent-color);
+}
+
+::ng-deep .mat-form-field-label
+{
+    color: var(--text-secondary) !important;
+}
+
+::ng-deep .mat-input-element
+{
+    color: var(--text-color) !important;
+    caret-color: var(--accent-color) !important;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-flex
+{
+    border-color: var(--accent-color) !important;
+    background-color: rgba(138, 180, 248, 0.1) !important;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label
+{
+    color: var(--accent-color) !important;
+}
+
+button[mat-raised-button]
+{
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    background-color: var(--accent-color) !important;
+    color: var(--primary-color) !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+button[mat-raised-button]:hover
+{
+    background-color: var(--accent-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+.error-msg
+{
+    color: #ff6b6b;
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 0.75rem;
+    background-color: rgba(255, 107, 107, 0.1);
+    border-radius: 8px;
+    border-left: 3px solid #ff6b6b;
+}
+
+mat-card-actions
+{
+    margin-top: 2.5rem;
+    padding: 0;
+    flex-direction: column;
+}
+
+mat-card-actions h4
+{
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+mat-card-actions ul
+{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+mat-card-actions li
+{
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    border-left: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+mat-card-actions li:hover
+{
+    border-left-color: var(--accent-color);
+    background-color: rgba(138, 180, 248, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 600px)
+{
+    mat-card
+    {
+        padding: 2rem 1.5rem;
+    }
+
+    mat-card-title
+    {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 480px)
+{
+    mat-card
+    {
+        padding: 1.75rem 1.25rem;
+    }
+
+    mat-card-title
+    {
+        font-size: 1.5rem;
+    }
+
+    mat-card-actions h4
+    {
+        font-size: 0.85rem;
+    }
+
+    mat-card-actions li
+    {
+        font-size: 0.8rem;
+    }
+}
+
+.desbloqueo-box
+{
+    margin-top: 10px;
+}
+
+.mensaje-exito
+{
+    color: green;
+    margin-top: 10px;
+}
