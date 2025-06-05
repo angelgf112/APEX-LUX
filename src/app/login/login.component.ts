@@ -190,4 +190,14 @@ export class LoginComponent implements AfterViewInit {
     this.error = false;
     this.regError = '';
   }
+
+  // git
+  async loginConGitHub() {
+    const res = await this.authService.loginWithGitHub();
+    if (res.success) {
+      this.router.navigate(['/']);
+    } else {
+      this.error = true;
+    }
+  }
 }
