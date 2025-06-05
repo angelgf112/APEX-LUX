@@ -45,6 +45,8 @@
         <button mat-raised-button color="primary" type="submit">Entrar</button>
       </form>
 
+      <button (click)="loginConGitHub()">Iniciar sesión con GitHub</button>
+
       <p *ngIf="error" class="error-msg">Usuario o contraseña incorrectos</p>
 
       <p *ngIf="mostrarBotonDesbloqueo" class="error-msg">
