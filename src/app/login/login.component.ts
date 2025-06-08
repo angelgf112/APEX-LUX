@@ -8,6 +8,16 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { ViewChild, ElementRef, AfterViewInit, NgZone } from '@angular/core';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+// sms
+import {
+  getAuth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  Auth,
+} from 'firebase/auth';
+
 @Component({
   standalone: true,
   imports: [
@@ -50,10 +60,25 @@ export class LoginComponent implements AfterViewInit {
   errorCaptcha: string | null = null;
   captchaWidgetId: any;
 
+  // sms
+  @ViewChild('firebaseRecaptcha', { static: false })
+  firebaseRecaptcha!: ElementRef;
+
+  recaptchaVerifier!: RecaptchaVerifier;
+  auth: Auth = getAuth();
+
+  phoneNumber: string = '';
+  verificationCode: string = '';
+  confirmationResult: any = null;
+  telefono: string = '';
+  nombre: string = '';
+  codigo: string = '';
+
   constructor(
     private authService: AuthService,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private snackBar: MatSnackBar
   ) {
     (window as any).captchaCallback = (response: string) => {
       this.ngZone.run(() => {
@@ -82,6 +107,74 @@ export class LoginComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.renderCaptcha();
+    this.inicializarRecaptchaFirebase();
+  }
+
+  // Inicializar reCAPTCHA invisible para Firebase SMS
+  inicializarRecaptchaFirebase() {
+    if (!this.recaptchaVerifier && this.firebaseRecaptcha) {
+      this.recaptchaVerifier = new RecaptchaVerifier(
+        this.auth,
+        this.firebaseRecaptcha.nativeElement as HTMLElement,
+        {
+          size: 'invisible',
+          callback: (response: any) => {
+            console.log('Captcha resuelto para SMS');
+          },
+        }
+      );
+      this.recaptchaVerifier.render();
+    }
+  }
+
+  // Enviar SMS con código de verificación
+  async enviarCodigoSms() {
+    const numero = this.telefono; // debe ir con +52 (si es México)
+    const nombre = this.nombre;
+
+    const res = await this.authService.loginWithPhoneNumber(numero, nombre);
+    if (res.success && res.confirmationResult) {
+      this.confirmationResult = res.confirmationResult;
+      this.snackBar.open('SMS enviado. Ingresa el código', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+      });
+    } else {
+      this.snackBar.open('Error al enviar SMS', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+      });
+    }
+  }
+
+  // Verificar código SMS y hacer login
+  async verificarCodigoSms() {
+    if (!this.confirmationResult) return;
+
+    const res = await this.authService.verificarCodigoSMS(
+      this.confirmationResult,
+      this.codigo,
+      this.nombre
+    );
+    if (res.success) {
+      this.snackBar.open('Inicio de sesión exitoso', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+      });
+      this.phoneNumber = '';
+      this.verificationCode = '';
+      this.confirmationResult = null;
+      this.telefono = '';
+      this.nombre = '';
+      this.codigo = '';
+
+      this.router.navigate(['/']);
+    } else {
+      this.snackBar.open('Código incorrecto', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+      });
+    }
   }
 
   async login() {
@@ -173,13 +266,18 @@ export class LoginComponent implements AfterViewInit {
         this.regEmail,
         this.regPassword
       );
-      alert('Usuario registrado con éxito.');
+      //alert('Usuario registrado con éxito.');
+      this.snackBar.open('Usuario registrado con éxito', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+      });
       // Reset campos y volver a login
       this.name = '';
       this.regEmail = '';
       this.regPassword = '';
       this.confirmPassword = '';
       this.isRegisterMode = false;
+      this.renderCaptcha();
     } catch (err) {
       this.regError = 'Error al registrar el usuario. Intente de nuevo.';
     }

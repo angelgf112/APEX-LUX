@@ -43,15 +43,22 @@
         <p *ngIf="errorCaptcha" class="error-msg">{{ errorCaptcha }}</p>
 
         <button mat-raised-button color="primary" type="submit">Entrar</button>
-      </form>
 
-      <button (click)="loginConGitHub()">Iniciar sesión con GitHub</button>
+        <button (click)="loginConGitHub()" mat-button class="github-btn">
+          <i class="fab fa-github"></i> Iniciar sesión con GitHub
+        </button>
+      </form>
 
       <p *ngIf="error" class="error-msg">Usuario o contraseña incorrectos</p>
 
-      <p *ngIf="mostrarBotonDesbloqueo" class="error-msg">
+      <p *ngIf="mostrarBotonDesbloqueo" class="desbloqueo-box">
         Cuenta bloqueada por 3 intentos fallidos.
-        <button mat-button color="warn" (click)="resetPassword()">
+        <button
+          mat-button
+          color="warn"
+          (click)="resetPassword()"
+          class="reset-btn"
+        >
           Restablecer contraseña
         </button>
       </p>
@@ -129,5 +136,36 @@
         }}
       </button>
     </mat-card-actions>
+
+    <div id="recaptcha-container"></div>
+
+    <form (ngSubmit)="enviarCodigoSms()">
+      <input
+        type="text"
+        [(ngModel)]="telefono"
+        name="telefono"
+        placeholder="Telefono con +52"
+        required
+      />
+      <input
+        type="text"
+        [(ngModel)]="nombre"
+        name="nombre"
+        placeholder="Tu nombre"
+        required
+      />
+      <button type="submit">Enviar SMS</button>
+    </form>
+
+    <form *ngIf="confirmationResult" (ngSubmit)="verificarCodigoSms()">
+      <input
+        type="text"
+        [(ngModel)]="codigo"
+        name="codigo"
+        placeholder="Codigo recibido"
+        required
+      />
+      <button type="submit">Verificar</button>
+    </form>
   </mat-card>
 </div>
