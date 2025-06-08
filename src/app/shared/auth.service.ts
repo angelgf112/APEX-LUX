@@ -18,7 +18,13 @@ import {
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 // git
-import { GithubAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+  GithubAuthProvider,
+  signInWithPopup,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  ConfirmationResult,
+} from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +34,71 @@ export class AuthService {
   private firestore = inject(Firestore);
   private loggedUserName: string | null = null;
   private userType: 'admin' | 'usuario' | null = null;
+
+  async loginWithPhoneNumber(
+    phoneNumber: string,
+    nombre?: string
+  ): Promise<{
+    success: boolean;
+    confirmationResult?: ConfirmationResult;
+    error?: string;
+  }> {
+    try {
+      const appVerifier = new RecaptchaVerifier(
+        this.auth, // ✅ primero va auth
+        'recaptcha-container',
+        {
+          size: 'invisible',
+          callback: (response: any) => {
+            console.log('reCAPTCHA resuelto');
+          },
+        }
+      );
+
+      const confirmationResult = await signInWithPhoneNumber(
+        this.auth,
+        phoneNumber,
+        appVerifier
+      );
+
+      return { success: true, confirmationResult };
+    } catch (error: any) {
+      console.error('Error al enviar SMS:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async verificarCodigoSMS(
+    confirmationResult: ConfirmationResult,
+    code: string,
+    nombre?: string
+  ): Promise<{ success: boolean; error?: string }> {
+    try {
+      const result = await confirmationResult.confirm(code);
+      const user = result.user;
+
+      // Buscar si ya existe
+      const userSnap = await getDoc(doc(this.firestore, 'usuarios', user.uid));
+
+      if (!userSnap.exists()) {
+        await setDoc(doc(this.firestore, 'usuarios', user.uid), {
+          nombre: nombre || 'Usuario',
+          telefono: user.phoneNumber,
+          email: null,
+          intentosFallidos: 0,
+          bloqueado: false,
+        });
+      }
+
+      this.loggedUserName = nombre || 'Usuario';
+      this.userType = 'usuario';
+
+      return { success: true };
+    } catch (error: any) {
+      console.error('Error al verificar el código:', error);
+      return { success: false, error: error.message };
+    }
+  }
 
   async login(
     email: string,
