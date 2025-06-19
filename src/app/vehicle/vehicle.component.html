@@ -1,0 +1,146 @@
+<div class="vehicles-container">
+  <h1 class="page-title">Nuestros Vehículos</h1>
+
+  <div class="filter-section">
+    <mat-form-field>
+      <mat-label>Filtrar por tipo</mat-label>
+      <mat-select [(value)]="selectedType">
+        <mat-option value="all">Todos</mat-option>
+        @for (type of vehicleTypes; track type) {
+        <mat-option [value]="type" [ngStyle]="{ color: getTypeColor(type) }">
+          {{ type }}
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="vehicles-grid">
+    @for (vehicle of filteredVehicles; track vehicle.id) {
+    <mat-card class="vehicle-card" [ngClass]="{
+        'sold-card': vehicle.status === 'sold',
+        'highlighted-card': vehicle.isFeatured
+      }" [ngStyle]="{
+        transform: isHovered[vehicle.id] ? 'scale(1.02)' : 'scale(1)',
+        'box-shadow': isHovered[vehicle.id]
+          ? '0 8px 16px rgba(0,0,0,0.15)'
+          : 'var(--elevation-1)',
+        '--type-color': getTypeColor(vehicle.type)
+      }" (mouseenter)="isHovered[vehicle.id] = true" (mouseleave)="isHovered[vehicle.id] = false">
+      @if (vehicle.discount > 0) {
+      <div class="offer-tag" [ngStyle]="{
+          background: vehicle.discount > 15 ? '#ff4757' : '#4CAF50'
+        }">
+        {{ vehicle.discount }}% OFF
+      </div>
+      }
+
+      <img mat-card-image [src]="vehicle.image" [alt]="vehicle.model" />
+
+      <mat-card-content>
+        <h2>{{ vehicle.model }}</h2>
+        <p class="price">{{ vehicle.price | currency }}</p>
+        <div class="specs">
+          <p class="type-indicator">
+            <mat-icon>directions_car</mat-icon> {{ vehicle.type }}
+          </p>
+          <p><mat-icon>speed</mat-icon> {{ vehicle.engine }}</p>
+          <p>
+            <mat-icon>airline_seat_recline_normal</mat-icon>
+            {{ vehicle.seats }} asientos
+          </p>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="viewDetails(vehicle.id)">
+          Detalles
+        </button>
+        <button mat-raised-button color="accent" [ngClass]="{ 'disabled-button': vehicle.status === 'sold' }"
+          (click)="toggleQuoteForm(vehicle.id)">
+          {{ vehicle.status === "sold" ? "Agotado" : "Cotizar" }}
+        </button>
+      </mat-card-actions>
+
+      @if (selectedVehicleId === vehicle.id) {
+      <div class="quote-form-container">
+        <!-- Formulario para solicitar cotizacion, solo aparece si el ID coincide -->
+        <form #quoteForm="ngForm" (ngSubmit)="submitQuote(quoteForm)">
+          <!-- Campo para el nombre completo con validacion de requerido y longitud minima -->
+          <mat-form-field appearance="fill">
+            <mat-label>Nombre completo</mat-label>
+            <input matInput name="fullName" [(ngModel)]="quoteData.fullName" required minlength="3" #fullName="ngModel" />
+            <!-- Validacion: campo requerido -->
+            @if (fullName.errors?.['required']) {
+            <mat-error>Nombre requerido</mat-error>
+            }
+            <!-- Validacion: minimo 3 caracteres -->
+            @if (fullName.errors?.['minlength']) {
+            <mat-error>Minimo 3 caracteres</mat-error>
+            }
+          </mat-form-field>
+
+          <!-- Campo para correo electronico con validaciones de requerido y formato -->
+          <mat-form-field appearance="fill">
+            <mat-label>Correo electronico</mat-label>
+            <input matInput type="email" name="email" [(ngModel)]="quoteData.email" required email #email="ngModel" />
+            @if (email.errors?.['required']) {
+            <mat-error>Correo requerido</mat-error>
+            } 
+            @if (email.errors?.['email']) {
+            <mat-error>Formato invalido</mat-error>
+            }
+          </mat-form-field>
+
+          <!-- Select para tipo de financiamiento -->
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de financiamiento</mat-label>
+            <mat-select name="financingType" [(ngModel)]="quoteData.financingType"
+              required #financingType="ngModel">
+              @for (option of financingOptions; track option) {
+              <mat-option [value]="option">{{ option }}</mat-option>
+              }
+            </mat-select>
+            @if (financingType.errors?.['required']) {
+            <mat-error>Selecciona un tipo</mat-error>
+            }
+          </mat-form-field>
+
+          <!-- Radio buttons para aceptar promociones -->
+          <label>¿Acepta recibir promociones?</label>
+          <mat-radio-group name="promotions" [(ngModel)]="quoteData.promotions"
+            required #promotions="ngModel">
+            <mat-radio-button value="yes">Si</mat-radio-button>
+            <mat-radio-button value="no">No</mat-radio-button>
+          </mat-radio-group>
+          @if (promotions.errors?.['required']) {
+          <div class="error">Selecciona una opcion</div>
+          }
+
+          <!-- Selector de fecha con validacion de minimo (hoy) -->
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha deseada de contacto</mat-label>
+            <input matInput [matDatepicker]="picker" name="contactDate" [(ngModel)]="quoteData.contactDate" required
+              [min]="today" #contactDate="ngModel" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+
+            @if (contactDate.errors?.['required']) {
+            <mat-error>Fecha requerida</mat-error>
+            } 
+            @if (contactDate.errors?.['matDatepickerMin']) {
+            <mat-error>No puede ser anterior a hoy</mat-error>
+            }
+          </mat-form-field>
+
+          <!-- Boton para enviar la cotizacion, deshabilitado si el formulario es invalido -->
+          <button mat-raised-button color="primary" type="submit" [disabled]="!quoteForm.valid">
+            Enviar Cotizacion
+          </button>
+        </form>
+      </div>
+      }
+    </mat-card>
+    }
+  </div>
+</div>

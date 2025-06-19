@@ -1,0 +1,61 @@
+<div class="services-container">
+  <h1 class="page-title">Nuestros Servicios</h1>
+
+  <!-- Barra de búsqueda con Bootstrap -->
+  <div class="search-container mb-4">
+    <div class="input-group custom-search">
+      <input
+        type="text"
+        class="form-control bg-dark text-light border-0"
+        placeholder="Ej: Mantenimiento, Reparación..."
+        [(ngModel)]="searchTerm"
+        (input)="filterServices()"
+      />
+      <span class="input-group-text bg-transparent border-0">
+        <i class="material-icons text-primary">search</i>
+      </span>
+    </div>
+  </div>
+
+  <!-- Estados -->
+  @if (isLoading) {
+  <div class="loading-message">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Cargando servicios...</p>
+  </div>
+  } @if (errorMessage) {
+  <div class="error-message">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ errorMessage }}</p>
+  </div>
+  }
+
+  <!-- Lista de servicios -->
+  @if (!isLoading) {
+  <mat-accordion class="services-accordion">
+    @for (service of filteredServices; track service) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon class="service-icon">{{ service.icon }}</mat-icon>
+          {{ service.title }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <p class="service-description">{{ service.description }}</p>
+
+      <mat-action-row>
+        <button mat-button color="primary">Más información</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+    } @if (filteredServices.length === 0) {
+    <div class="no-results">
+      <mat-icon>search_off</mat-icon>
+      <p>No se encontraron servicios que coincidan con "{{ searchTerm }}"</p>
+    </div>
+    }
+  </mat-accordion>
+
+  <app-faq></app-faq>
+  }
+</div>

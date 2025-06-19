@@ -1,0 +1,32 @@
+<section class="featured-section">
+    <h2 class="section-title">Vehículos Destacados</h2>
+    <button class="carousel-nav prev" (click)="owlCarousel.prev()">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="carousel-nav next" (click)="owlCarousel.next()">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <owl-carousel-o #owlCarousel [options]="carouselOptions">
+        @for (vehicle of featuredVehicles; track vehicle.id) {
+        <ng-template carouselSlide>
+            <mat-card class="vehicle-card">
+                <img mat-card-image [src]="vehicle.image" [alt]="vehicle.model" />
+                <mat-card-content>
+                    <h3>{{ vehicle.model }}</h3>
+                    <p>{{ vehicle.price | currency : "MXN" : "symbol" : "1.0-0" }}</p>
+                    <div class="features">
+                        <span><mat-icon>directions_car</mat-icon> {{ vehicle.type }}</span>
+                        <span><mat-icon>speed</mat-icon> {{ vehicle.engine }}</span>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button color="primary" (click)="viewDetails(vehicle.id)">
+                        Ver detalles
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </ng-template>
+        }
+    </owl-carousel-o>
+</section>

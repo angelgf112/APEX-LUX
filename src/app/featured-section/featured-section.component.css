@@ -1,0 +1,126 @@
+/* ================= FEATURED SECTION ================= */
+
+.section-title {
+    text-align: right;
+    font-size: 1.8rem; /* Tamaño más discreto */
+    font-weight: 600;
+    color: var(--text-color, #1a1a1a) !important;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--accent-color) !important; /* Subrayado completo */
+    text-align: center;
+}
+
+.featured-section {
+  position: relative;
+  padding: 2rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+owl-carousel-o {
+    margin: 0 -15px;
+}
+
+/* ================= FEATURED SECTION ================= */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+}
+
+.carousel-nav:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-nav i {
+    font-size: 20px;
+    color: var(--accent-color);
+}
+
+/* Estilo para la flecha 'prev' */
+.carousel-nav.prev {
+    left: 10px;
+}
+
+/* Estilo para la flecha 'next' */
+.carousel-nav.next {
+    right: 10px;
+}
+
+
+.featured-section .vehicle-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 15px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.vehicle-card h3 {
+  color: white !important;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.vehicle-card p {
+  color: var(--accent-color) !important; 
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+
+.vehicle-card .features span {
+  color: rgba(255, 255, 255, 0.9) !important; 
+}
+
+.vehicle-card .features mat-icon {
+  color: var(--accent-color) !important; 
+}
+
+
+.featured-section .vehicle-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent-color);
+}
+
+.featured-section .vehicle-card img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.featured-section .mat-card-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-section .features {
+    display: flex;
+    align-items: center;
+}
+

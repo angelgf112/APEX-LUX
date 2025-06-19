@@ -1,0 +1,6 @@
+.main-content
+{
+    min-height: calc(100vh - 64px - 60px - 100px);
+    /* Ajusta según tus alturas */
+    padding: 2rem;
+}

@@ -1,0 +1,71 @@
+@if (vehicle) {
+<div class="vehicle-details-container">
+  <mat-card class="vehicle-card">
+    <mat-card-header class="vehicle-card-header">
+      <mat-card-title class="vehicle-title">{{ vehicle.model }}</mat-card-title>
+    </mat-card-header>
+
+    <div class="image-container">
+      <img
+        mat-card-image
+        [src]="vehicle.image"
+        alt="Image of {{ vehicle.model }}"
+        class="vehicle-image"
+      />
+      <div class="price-badge">{{ vehicle.price | currency }}</div>
+    </div>
+
+    <mat-card-content>
+      <div class="specs">
+        <div class="spec-item">
+          <mat-icon class="spec-icon">directions_car</mat-icon>
+          <div>
+            <div class="spec-label">Tipo</div>
+            <div class="spec-value">{{ vehicle.type }}</div>
+          </div>
+        </div>
+
+        <div class="spec-item">
+          <mat-icon class="spec-icon">speed</mat-icon>
+          <div>
+            <div class="spec-label">Motor</div>
+            <div class="spec-value">{{ vehicle.engine }}</div>
+          </div>
+        </div>
+
+        <div class="spec-item">
+          <mat-icon class="spec-icon">airline_seat_recline_normal</mat-icon>
+          <div>
+            <div class="spec-label">Asientos</div>
+            <div class="spec-value">{{ vehicle.seats }}</div>
+          </div>
+        </div>
+      </div>
+
+      @if (vehicle.details) {
+      <div class="vehicle-details">
+        <h3 class="details-title">Detalles del vehículo</h3>
+        <p class="details-content">{{ vehicle.details }}</p>
+      </div>
+      }
+    </mat-card-content>
+
+    <mat-card-actions class="actions-container">
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="goBack()"
+        class="back-button"
+      >
+        <mat-icon>arrow_back</mat-icon>
+        Volver
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+} @else {
+<div class="loading-container">
+  <mat-spinner diameter="50"></mat-spinner>
+  <p class="loading-text">Cargando detalles del vehículo...</p>
+</div>
+}

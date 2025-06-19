@@ -1,0 +1,113 @@
+<!-- admin-panel.component.html -->
+
+<!-- SECCIÓN DE COTIZACIONES -->
+<h2>Cotizaciones</h2>
+@if (cotizaciones.length > 0) {
+<div class="cards-container">
+  @for (cotizacion of cotizaciones; track cotizacion.id) {
+  <mat-card class="admin-card">
+    <mat-card-content>
+      <!-- MODO EDICIÓN -->
+      @if (cotizacion.isEditing) {
+      <div class="edit-form">
+        <!-- Usamos el nuevo método para obtener las claves ordenadas -->
+        @for (key of getSortedKeys(cotizacion, 'cotizaciones'); track key) {
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>{{ key | titlecase }}</mat-label>
+          <input matInput [(ngModel)]="cotizacion[key]" />
+        </mat-form-field>
+        }
+      </div>
+      } @else {
+      <!-- MODO VISTA -->
+      <div class="view-mode">
+        @for (key of getSortedKeys(cotizacion, 'cotizaciones'); track key) {
+        <p>
+          <strong>{{ key | titlecase }}:</strong> 
+          <!-- Usamos el nuevo método para formatear fechas y otros valores -->
+          <span>{{ formatFieldValue(cotizacion[key]) }}</span>
+        </p>
+        }
+      </div>
+      }
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <!-- BOTONES DE ACCIÓN -->
+      @if (cotizacion.isEditing) {
+      <button mat-icon-button color="accent" (click)="saveCotizacion(cotizacion)" aria-label="Guardar cambios">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="cancelEditCotizacion(cotizacion)" aria-label="Cancelar edición">
+        <mat-icon>cancel</mat-icon>
+      </button>
+      } @else {
+      <button mat-icon-button color="primary" (click)="editCotizacion(cotizacion)" aria-label="Editar cotización">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteCotizacion(cotizacion.id)" aria-label="Eliminar cotización">
+        <mat-icon>delete</mat-icon>
+      </button>
+      }
+    </mat-card-actions>
+  </mat-card>
+  }
+</div>
+} @else {
+<p>No hay cotizaciones registradas.</p>
+}
+
+<hr />
+
+<!-- SECCIÓN DE CONTACTOS -->
+<h2>Solicitudes de Contacto</h2>
+@if (contactos.length > 0) {
+<div class="cards-container">
+  @for (contacto of contactos; track contacto.id) {
+  <mat-card class="admin-card">
+    <mat-card-content>
+      <!-- MODO EDICIÓN -->
+      @if (contacto.isEditing) {
+      <div class="edit-form">
+        @for (key of getSortedKeys(contacto, 'contactos'); track key) {
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>{{ key | titlecase }}</mat-label>
+          <input matInput [(ngModel)]="contacto[key]" />
+        </mat-form-field>
+        }
+      </div>
+      } @else {
+      <!-- MODO VISTA -->
+      <div class="view-mode">
+        @for (key of getSortedKeys(contacto, 'contactos'); track key) {
+        <p>
+          <strong>{{ key | titlecase }}:</strong> 
+          <span>{{ formatFieldValue(contacto[key]) }}</span>
+        </p>
+        }
+      </div>
+      }
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <!-- BOTONES DE ACCIÓN -->
+      @if (contacto.isEditing) {
+      <button mat-icon-button color="accent" (click)="saveContacto(contacto)" aria-label="Guardar cambios">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="cancelEditContacto(contacto)" aria-label="Cancelar edición">
+        <mat-icon>cancel</mat-icon>
+      </button>
+      } @else {
+      <button mat-icon-button color="primary" (click)="editContacto(contacto)" aria-label="Editar contacto">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteContacto(contacto.id)" aria-label="Eliminar contacto">
+        <mat-icon>delete</mat-icon>
+      </button>
+      }
+    </mat-card-actions>
+  </mat-card>
+  }
+</div>
+} @else {
+<p>No hay contactos registrados.</p>
+}

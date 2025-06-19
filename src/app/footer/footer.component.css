@@ -1,0 +1,222 @@
+.university-footer
+{
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-container
+{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding-bottom: 2rem;
+
+}
+
+.section-title
+{
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+.team-members
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.team-member
+{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background-color: #333;
+    /* Fondo más claro para resaltar del footer */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    /* Sombra más notoria */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.team-member:hover
+{
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
+    /* Efecto al pasar el mouse */
+}
+
+
+.team-card
+{
+    background-color: #2c2c2c;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+.member-photo
+{
+    width: 70px;
+    /* Reducido de 60px */
+    height: 100px;
+    /* Reducido de 60px */
+    background-color: var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 2px solid var(--accent-color);
+    flex-shrink: 0;
+    min-width: 40px;
+    /* Reducido de 60px */
+    min-height: 40px;
+    /* Reducido de 60px */
+}
+
+.member-image
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-placeholder
+{
+    font-size: 40px;
+    color: var(--text-secondary);
+
+}
+
+.member-info h4
+{
+    margin: 0 0 0.3rem 0;
+    color: rgb(255, 254, 254);
+    font-size: 1rem;
+}
+
+.member-info p
+{
+    margin: 0.2rem 0;
+    font-size: 0.8rem;
+    color: rgb(255, 255, 255);
+}
+
+.university-section
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.university-logo
+{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.university-logo mat-icon
+{
+    font-size: 2rem;
+    color: var(--accent-color);
+}
+
+.university-logo span
+{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.university-info
+{
+    text-align: right;
+}
+
+.university-info h3
+{
+    color: var(--accent-color);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.university-info p
+{
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.footer-bottom
+{
+    width: 100%;
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px)
+{
+    .footer-container
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .team-members
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .university-section
+    {
+        align-items: flex-start;
+        margin-top: 2rem;
+    }
+
+    .university-info
+    {
+        text-align: left;
+    }
+}
+
+.mat-card-header
+{
+    align-items: center;
+    gap: 12px;
+    /* Añade espacio entre la foto y el texto */
+}
+
+/* Ajusta el tamaño de los textos para que coincida con las fotos más pequeñas */
+.mat-card-title
+{
+    font-size: 0.9rem;
+    /* Reducido ligeramente */
+    margin-bottom: 0;
+}
+
+.mat-card-subtitle
+{
+    font-size: 0.75rem;
+    /* Reducido ligeramente */
+    margin-bottom: 0;
+}

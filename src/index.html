@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ApexAutomotive</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favi.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/43805b8137.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://www.google.com/recaptcha/api.js?onload=captchaCallback&render=explicit"
+      async
+      defer
+    ></script>
+  </head>
+
+  <body class="mat-typography">
+    <app-root></app-root>
+    <svg class="filters" xmlns="http://www.w3.org/2000/svg">
+      <!-- Protanopia (rojo eliminado) -->
+      <filter id="protanopia-filter">
+        <feColorMatrix
+          type="matrix"
+          values="0, 1, 0, 0, 0
+           0, 1, 0, 0, 0
+           0, 0, 1, 0, 0
+           0, 0, 0, 1, 0"
+        />
+      </filter>
+
+      <!-- Deuteranopia (verde eliminado) -->
+      <filter id="deuteranopia-filter">
+        <feColorMatrix
+          type="matrix"
+          values="1, 0, 0, 0, 0
+           1, 0, 0, 0, 0
+           0, 0, 1, 0, 0
+           0, 0, 0, 1, 0"
+        />
+      </filter>
+
+      <filter id="tritanopia-filter">
+        <feColorMatrix
+          type="matrix"
+          values="1,0,0,0,0
+            0,  0.7, 0, 0, 0
+            0,  0.3, 1, 0, 0
+            0,  0,   0, 1, 0"
+        />
+      </filter>
+    </svg>
+  </body>
+</html>
