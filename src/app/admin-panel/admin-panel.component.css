@@ -1,4 +1,7 @@
 /* admin.component.css */
+h2{
+    color: whitesmoke;
+}
 .admin-container
 {
     max-width: 1200px;

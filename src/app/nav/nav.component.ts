@@ -46,4 +46,7 @@ export class NavComponent {
     this.authService.logout();
     this.router.navigate(['/']); // Lo manda al inicio después de logout
   }
+  AdminPanel(){
+    this.router.navigate(['/']);
+  }
 }
