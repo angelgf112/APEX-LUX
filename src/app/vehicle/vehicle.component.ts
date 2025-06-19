@@ -15,6 +15,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { QuoteService } from '../services/quote.service'; // Ajusta ruta si es necesario
 
 @Component({
   selector: 'app-vehicle',
@@ -67,10 +68,12 @@ export class VehicleComponent {
   };
 
   constructor(
-    private vehicleService: VehicleService,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
+  private vehicleService: VehicleService,
+  private router: Router,
+  private snackBar: MatSnackBar,
+  private quoteService: QuoteService // Nuevo
+) {}
+
 
   // Se ejecuta al cargar el componente, obtiene los vehiculos del servicio
   ngOnInit(): void {
@@ -112,31 +115,34 @@ export class VehicleComponent {
   }
 
   // Envia los datos del formulario si es valido
-  submitQuote(form: any) {
-    if (form.valid) {
-      // Obtiene cotizaciones guardadas en localStorage
-      const storedQuotes = JSON.parse(localStorage.getItem('quotes') || '[]');
-
-      // Agrega la nueva cotizacion
-      storedQuotes.push({
+  async submitQuote(form: any) {
+  if (form.valid) {
+    try {
+      const quote = {
         vehicleId: this.selectedVehicleId,
         ...this.quoteData,
-      });
+        timestamp: new Date()
+      };
 
-      // Guarda de nuevo en localStorage
-      localStorage.setItem('quotes', JSON.stringify(storedQuotes));
+      await this.quoteService.saveQuote(quote);
 
-      // Muestra mensaje de exito
       this.snackBar.open('Cotización enviada exitosamente.', 'Cerrar', {
         duration: 3000,
         panelClass: ['snackbar-success'],
       });
 
-      // Cierra el formulario y lo resetea
       this.selectedVehicleId = null;
       this.resetForm();
+    } catch (error) {
+      console.error('Error al guardar la cotización:', error);
+      this.snackBar.open('Ocurrió un error al guardar la cotización.', 'Cerrar', {
+        duration: 3000,
+        panelClass: ['snackbar-error'],
+      });
     }
   }
+}
+
 
   // Devuelve un color segun el tipo de vehiculo (para la tarjeta)
   getTypeColor(type: string): string {
