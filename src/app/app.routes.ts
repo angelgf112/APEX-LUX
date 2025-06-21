@@ -46,7 +46,13 @@ export const routes: Routes = [
         (m) => m.AdminPanelComponent
       ),
     title: 'Panel de Administración - ApexAutomotive',
-  },
+  },{
+  path: 'admin-graficas',
+  loadComponent: () =>
+    import('./admin-graficas/admin-graficas.component').then(m => m.AdminGraficasComponent),
+  title: 'Gráficas - ApexAutomotive',
+},
+
   {
     path: '**',
     redirectTo: '',

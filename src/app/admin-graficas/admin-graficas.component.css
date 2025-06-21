@@ -1,0 +1,20 @@
+.chart-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+mat-card-title {
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+canvas {
+  background-color: #1e1e1e !important;
+  border-radius: 10px;
+}
+
+mat-card {
+  background-color: transparent !important;
+  box-shadow: none;
+}
