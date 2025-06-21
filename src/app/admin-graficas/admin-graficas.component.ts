@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Firestore, collection, collectionData, Timestamp, DocumentData, CollectionReference } from '@angular/fire/firestore';
 import { NgChartsModule, BaseChartDirective } from 'ng2-charts';
@@ -15,11 +15,10 @@ import 'chartjs-adapter-date-fns';
   styleUrls: ['./admin-graficas.component.css'],
 })
 export class AdminGraficasComponent implements OnInit {
-  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  @ViewChildren(BaseChartDirective) charts!: QueryList<BaseChartDirective>;
 
   public chartType: ChartType = 'bar';
 
-  // Cotizaciones por fecha
   public chartDataFechas: ChartData = {
     labels: [],
     datasets: [{
@@ -41,7 +40,6 @@ export class AdminGraficasComponent implements OnInit {
     }
   };
 
-  // Cotizaciones por tipo de financiamiento
   public chartDataFinanciamiento: ChartData = {
     labels: [],
     datasets: [{
@@ -63,7 +61,6 @@ export class AdminGraficasComponent implements OnInit {
     }
   };
 
-  // Cotizaciones por ID de vehículo
   public chartDataVehiculos: ChartData = {
     labels: [],
     datasets: [{
@@ -93,7 +90,6 @@ export class AdminGraficasComponent implements OnInit {
     collectionData(cotizacionesRef, { idField: 'id' }).pipe(
       map(items => items.map(item => ({ ...item })))
     ).subscribe(data => {
-      // --- Por FECHA ---
       const fechaMap = new Map<number, number>();
       data.forEach(item => {
         if (item['contactDate']?.seconds) {
@@ -108,7 +104,6 @@ export class AdminGraficasComponent implements OnInit {
         new Date(ts).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' }));
       this.chartDataFechas.datasets[0].data = fechas.map(([, count]) => count);
 
-      // --- Por TIPO DE FINANCIAMIENTO ---
       const financiamientoMap = new Map<string, number>();
       data.forEach(item => {
         const tipo = item['financingType']?.toString() || 'Desconocido';
@@ -118,7 +113,6 @@ export class AdminGraficasComponent implements OnInit {
       this.chartDataFinanciamiento.labels = tipos.map(([tipo]) => tipo);
       this.chartDataFinanciamiento.datasets[0].data = tipos.map(([, count]) => count);
 
-      // --- Por VEHÍCULO ---
       const vehiculoMap = new Map<string, number>();
       data.forEach(item => {
         const idVehiculo = item['vehicleId']?.toString() || 'Desconocido';
@@ -128,7 +122,9 @@ export class AdminGraficasComponent implements OnInit {
       this.chartDataVehiculos.labels = vehiculos.map(([id]) => id);
       this.chartDataVehiculos.datasets[0].data = vehiculos.map(([, count]) => count);
 
-      this.chart?.update();
+      setTimeout(() => {
+        this.charts.forEach(chart => chart.update());
+      });
     });
   }
 }
