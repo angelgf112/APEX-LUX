@@ -1,0 +1,44 @@
+<!-- Cotizaciones por Fecha -->
+<mat-card class="chart-card">
+  <mat-card-title>Resumen de Cotizaciones por Fecha</mat-card-title>
+  <mat-card-content>
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [data]="chartDataFechas"
+              [type]="chartType"
+              [options]="chartOptionsFechas"
+              [legend]="true">
+      </canvas>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Cotizaciones por Tipo de Financiamiento -->
+<mat-card class="chart-card">
+  <mat-card-title>Resumen por Tipo de Financiamiento</mat-card-title>
+  <mat-card-content>
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [data]="chartDataFinanciamiento"
+              [type]="chartType"
+              [options]="chartOptionsFinanciamiento"
+              [legend]="true">
+      </canvas>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Cotizaciones por ID de Vehículo -->
+<mat-card class="chart-card">
+  <mat-card-title>Resumen por Vehículo</mat-card-title>
+  <mat-card-content>
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [data]="chartDataVehiculos"
+              [type]="chartType"
+              [options]="chartOptionsVehiculos"
+              [legend]="true">
+      </canvas>
+    </div>
+  </mat-card-content>
+</mat-card>
