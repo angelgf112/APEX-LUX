@@ -23,7 +23,7 @@
       <div class="view-mode">
         @for (key of getSortedKeys(cotizacion, 'cotizaciones'); track key) {
         <p>
-          <strong>{{ key | titlecase }}:</strong> 
+          <strong>{{ key | titlecase }}:</strong>
           <!-- Usamos el nuevo método para formatear fechas y otros valores -->
           <span>{{ formatFieldValue(cotizacion[key]) }}</span>
         </p>
@@ -34,17 +34,37 @@
     <mat-card-actions align="end">
       <!-- BOTONES DE ACCIÓN -->
       @if (cotizacion.isEditing) {
-      <button mat-icon-button color="accent" (click)="saveCotizacion(cotizacion)" aria-label="Guardar cambios">
+      <button
+        mat-icon-button
+        color="accent"
+        (click)="saveCotizacion(cotizacion)"
+        aria-label="Guardar cambios"
+      >
         <mat-icon>save</mat-icon>
       </button>
-      <button mat-icon-button color="warn" (click)="cancelEditCotizacion(cotizacion)" aria-label="Cancelar edición">
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="cancelEditCotizacion(cotizacion)"
+        aria-label="Cancelar edición"
+      >
         <mat-icon>cancel</mat-icon>
       </button>
       } @else {
-      <button mat-icon-button color="primary" (click)="editCotizacion(cotizacion)" aria-label="Editar cotización">
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="editCotizacion(cotizacion)"
+        aria-label="Editar cotización"
+      >
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" (click)="deleteCotizacion(cotizacion.id)" aria-label="Eliminar cotización">
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="deleteCotizacion(cotizacion.id)"
+        aria-label="Eliminar cotización"
+      >
         <mat-icon>delete</mat-icon>
       </button>
       }
@@ -80,7 +100,7 @@
       <div class="view-mode">
         @for (key of getSortedKeys(contacto, 'contactos'); track key) {
         <p>
-          <strong>{{ key | titlecase }}:</strong> 
+          <strong>{{ key | titlecase }}:</strong>
           <span>{{ formatFieldValue(contacto[key]) }}</span>
         </p>
         }
@@ -90,17 +110,37 @@
     <mat-card-actions align="end">
       <!-- BOTONES DE ACCIÓN -->
       @if (contacto.isEditing) {
-      <button mat-icon-button color="accent" (click)="saveContacto(contacto)" aria-label="Guardar cambios">
+      <button
+        mat-icon-button
+        color="accent"
+        (click)="saveContacto(contacto)"
+        aria-label="Guardar cambios"
+      >
         <mat-icon>save</mat-icon>
       </button>
-      <button mat-icon-button color="warn" (click)="cancelEditContacto(contacto)" aria-label="Cancelar edición">
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="cancelEditContacto(contacto)"
+        aria-label="Cancelar edición"
+      >
         <mat-icon>cancel</mat-icon>
       </button>
       } @else {
-      <button mat-icon-button color="primary" (click)="editContacto(contacto)" aria-label="Editar contacto">
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="editContacto(contacto)"
+        aria-label="Editar contacto"
+      >
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" (click)="deleteContacto(contacto.id)" aria-label="Eliminar contacto">
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="deleteContacto(contacto.id)"
+        aria-label="Eliminar contacto"
+      >
         <mat-icon>delete</mat-icon>
       </button>
       }
