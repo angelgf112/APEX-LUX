@@ -26,6 +26,9 @@ import {
   ConfirmationResult,
 } from 'firebase/auth';
 
+import { BehaviorSubject } from 'rxjs';
+import { onAuthStateChanged } from 'firebase/auth';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -34,6 +37,15 @@ export class AuthService {
   private firestore = inject(Firestore);
   private loggedUserName: string | null = null;
   private userType: 'admin' | 'usuario' | null = null;
+
+  private isLoggedSubject = new BehaviorSubject<boolean>(false);
+  public isLogged$ = this.isLoggedSubject.asObservable();
+
+  constructor() {
+    onAuthStateChanged(this.auth, (user) => {
+      this.isLoggedSubject.next(!!user);
+    });
+  }
 
   async loginWithPhoneNumber(
     phoneNumber: string,
@@ -93,6 +105,8 @@ export class AuthService {
       this.loggedUserName = nombre || 'Usuario';
       this.userType = 'usuario';
 
+      this.isLoggedSubject.next(true);
+
       return { success: true };
     } catch (error: any) {
       console.error('Error al verificar el código:', error);
@@ -135,6 +149,8 @@ export class AuthService {
       await updateDoc(userDocRef, { intentosFallidos: 0, bloqueado: false });
       this.loggedUserName = userData['nombre'] || null;
       this.userType = userDocRef.path.includes('admins') ? 'admin' : 'usuario';
+
+      this.isLoggedSubject.next(true);
 
       return { success: true, bloqueado: false };
     } catch (error: any) {
@@ -256,6 +272,7 @@ export class AuthService {
     this.loggedUserName = null;
     this.userType = null;
     this.auth.signOut();
+    this.isLoggedSubject.next(false);
   }
 
   isAdmin(): boolean {
@@ -301,6 +318,8 @@ export class AuthService {
 
       this.loggedUserName = user.displayName || email;
       this.userType = 'usuario';
+
+      this.isLoggedSubject.next(true);
 
       return { success: true, email };
     } catch (error) {

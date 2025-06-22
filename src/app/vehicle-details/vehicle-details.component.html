@@ -61,6 +61,43 @@
         Volver
       </button>
     </mat-card-actions>
+
+    <div class="purchase-section">
+  <div *ngIf="isLogged" class="payment-container">
+    <h3 class="payment-title">Finalizar compra</h3>
+    <p class="payment-subtitle">Método de pago seguro</p>
+    <div id="paypal-button-container" class="paypal-button-wrapper"></div>
+    <div class="secure-payment">
+      <mat-icon class="secure-icon">lock</mat-icon>
+      <span>Transacción 100% segura</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLogged" class="login-required">
+    <mat-card class="login-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="login-icon">warning</mat-icon>
+        <mat-card-title>Acceso requerido</mat-card-title>
+        <mat-card-subtitle>Para continuar con la compra</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <p>Debes iniciar sesión para poder reservar este vehículo.</p>
+      </mat-card-content>
+      
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="goToLogin()" class="login-button">
+          <mat-icon>login</mat-icon>
+          Iniciar sesión
+        </button>
+        <button mat-stroked-button color="primary" (click)="goToLogin()" class="register-button">
+          <mat-icon>person_add</mat-icon>
+          Crear cuenta
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
   </mat-card>
 </div>
 } @else {
