@@ -3,6 +3,15 @@
 
   <div class="contact-content">
     <app-contact-info></app-contact-info>
-    <app-contact-form></app-contact-form>
+
+    @if (authService.isLogged$ | async) {
+      <app-contact-form></app-contact-form>
+  
+    } @else {
+      <mat-card class="login-prompt-card">
+        <p>Por favor, inicia sesión para enviar un mensaje.</p>
+      </mat-card>
+    }
+    
   </div>
 </div>

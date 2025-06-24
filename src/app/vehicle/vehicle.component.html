@@ -56,10 +56,19 @@
         <button mat-button color="primary" (click)="viewDetails(vehicle.id)">
           Detalles
         </button>
+      @if (authService.isLogged$ | async) {
         <button mat-raised-button color="accent" [ngClass]="{ 'disabled-button': vehicle.status === 'sold' }"
-          (click)="toggleQuoteForm(vehicle.id)">
-          {{ vehicle.status === "sold" ? "Agotado" : "Cotizar" }}
+                (click)="toggleQuoteForm(vehicle.id)">
+                {{ vehicle.status === "sold" ? "Agotado" : "Cotizar" }}
         </button>
+      } @else {
+        <mat-card class="login-prompt-message">
+          <p>inicia sesión para cotizar</p>
+        </mat-card>
+      }
+
+
+       
       </mat-card-actions>
 
       @if (selectedVehicleId === vehicle.id) {

@@ -259,3 +259,21 @@ mat-card-actions button:last-child {
   margin-left: auto;
 }
 
+.login-prompt-message {
+  /* Eliminamos el estilo de tarjeta para que se integre */
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo sutil o 'transparent' */
+  box-shadow: none; /* Sin sombra */
+  
+  /* Tipografía y espaciado para que parezca un botón/etiqueta */
+  color: rgba(255, 255, 255, 0.6); /* Color de texto más tenue que un botón activo */
+  padding: 6px 12px; /* Padding similar al de un botón para mantener la altura */
+  border-radius: 4px; /* Bordes redondeados consistentes con los botones */
+  font-size: 14px; /* Tamaño de fuente similar al de los botones */
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* Estilo para el párrafo dentro del mensaje */
+.login-prompt-message p {
+  margin: 0;
+}

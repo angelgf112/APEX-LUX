@@ -16,7 +16,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { QuoteService } from '../services/quote.service'; // Ajusta ruta si es necesario
-
+import { AuthService } from '../shared/auth.service';
 @Component({
   selector: 'app-vehicle',
   standalone: true,
@@ -71,7 +71,8 @@ export class VehicleComponent {
   private vehicleService: VehicleService,
   private router: Router,
   private snackBar: MatSnackBar,
-  private quoteService: QuoteService // Nuevo
+  private quoteService: QuoteService,
+  public authService: AuthService,
 ) {}
 
 
