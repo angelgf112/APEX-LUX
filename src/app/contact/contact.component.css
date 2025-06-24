@@ -62,3 +62,27 @@
         font-size: 1.75rem;
     }
 }
+
+
+.login-prompt-card {
+  
+  background-color: #1e1e1e; 
+  color: rgba(255, 255, 255, 0.87); 
+
+
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  width: 100%; 
+
+ 
+  border-radius: 8px; 
+  box-shadow: none; 
+  border: 1px solid rgba(255, 255, 255, 0.12); 
+}
+
+
+.login-prompt-card p {
+  margin: 0;
+  font-size: 1rem;
+}
