@@ -21,11 +21,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { QrService } from '../services/qr.service';
 
 interface EditableDocument extends DocumentData {
   id: string; // El ID que nos da Firestore
   isEditing?: boolean; // Para controlar el estado de la UI
   originalState?: any; // Para guardar el estado antes de editar
+  qrCodeUrl?: string; // Para almacenar el QR generado
+  isGeneratingQR?: boolean; // Para mostrar loading al generar QR
 }
 
 @Component({
@@ -39,7 +43,8 @@ interface EditableDocument extends DocumentData {
   MatFormFieldModule,
   MatIconModule,
   MatDatepickerModule,
-  MatNativeDateModule],
+  MatNativeDateModule,
+  MatProgressSpinnerModule],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.css',
 })
@@ -47,6 +52,9 @@ export class AdminPanelComponent {
    // Observables para los datos en tiempo real de Firestore.
   public cotizaciones: EditableDocument[] = [];
   public contactos: EditableDocument[] = [];
+  public isLoading: boolean = true; // Estado de carga general
+  public isLoadingCotizaciones: boolean = true; // Estado de carga específico para cotizaciones
+  public isLoadingContactos: boolean = true; // Estado de carga específico para contactos
 
   private cotizacionesSub!: Subscription;
   private contactosSub!: Subscription;
@@ -55,7 +63,7 @@ export class AdminPanelComponent {
   private readonly quoteFieldOrder = ['fullName', 'email', 'financingType', 'promotions', 'vehicleId', 'contactDate', 'timestamp'];
   private readonly contactFieldOrder = ['name', 'email', 'subject', 'contactMethod', 'date', 'message'];
 
-  constructor(private firestore: Firestore, private snackBar: MatSnackBar) {}
+  constructor(private firestore: Firestore, private snackBar: MatSnackBar, private qrService: QrService) {}
 
   ngOnInit() {
     this.loadData();
@@ -67,6 +75,10 @@ export class AdminPanelComponent {
   }
 
   private loadData() {
+    this.isLoading = true;
+    this.isLoadingCotizaciones = true;
+    this.isLoadingContactos = true;
+
     const cotizacionesCollection = collection(this.firestore, 'cotizaciones') as CollectionReference<EditableDocument>;
     const contactosCollection = collection(this.firestore, 'contactos') as CollectionReference<EditableDocument>;
 
@@ -78,8 +90,37 @@ export class AdminPanelComponent {
       map(items => items.map(item => ({ ...item, isEditing: false })))
     );
     
-    this.cotizacionesSub = cotizaciones$.subscribe(data => this.cotizaciones = data);
-    this.contactosSub = contactos$.subscribe(data => this.contactos = data);
+    this.cotizacionesSub = cotizaciones$.subscribe({
+      next: (data) => {
+        this.cotizaciones = data;
+        this.isLoadingCotizaciones = false;
+        this.checkLoadingComplete();
+      },
+      error: (error) => {
+        console.error('Error al cargar cotizaciones:', error);
+        this.isLoadingCotizaciones = false;
+        this.checkLoadingComplete();
+      }
+    });
+
+    this.contactosSub = contactos$.subscribe({
+      next: (data) => {
+        this.contactos = data;
+        this.isLoadingContactos = false;
+        this.checkLoadingComplete();
+      },
+      error: (error) => {
+        console.error('Error al cargar contactos:', error);
+        this.isLoadingContactos = false;
+        this.checkLoadingComplete();
+      }
+    });
+  }
+
+  private checkLoadingComplete(): void {
+    if (!this.isLoadingCotizaciones && !this.isLoadingContactos) {
+      this.isLoading = false;
+    }
   }
 
   // --- Métodos para COTIZACIONES (CRUD) ---
@@ -105,7 +146,7 @@ export class AdminPanelComponent {
   }
   
   public async saveCotizacion(item: EditableDocument) {
-    const { isEditing, originalState, id, ...dataToSave } = item;
+    const { isEditing, originalState, id, qrCodeUrl, isGeneratingQR, ...dataToSave } = item;
     if (!id) return this.showError("Error: El ID del documento no existe.");
     try {
         await updateDoc(doc(this.firestore, `cotizaciones/${id}`), dataToSave);
@@ -113,6 +154,56 @@ export class AdminPanelComponent {
         this.showSuccess('Cotización actualizada.');
     } catch(error) {
         this.showError('Error al actualizar la cotización.');
+    }
+  }
+
+  // --- Métodos para QR ---
+  public generarQR(cotizacion: EditableDocument): void {
+    if (!cotizacion.id) {
+      this.showError('Error: No se puede generar QR sin ID de cotización.');
+      return;
+    }
+
+    cotizacion.isGeneratingQR = true;
+    
+    this.qrService.generarQRPorId(cotizacion.id).subscribe({
+      next: (qrUrl) => {
+        cotizacion.qrCodeUrl = qrUrl;
+        cotizacion.isGeneratingQR = false;
+        this.showSuccess('Código QR generado exitosamente');
+      },
+      error: (error) => {
+        console.error('Error al generar QR:', error);
+        cotizacion.isGeneratingQR = false;
+        this.showError('Error al generar el código QR');
+      }
+    });
+  }
+
+  public descargarQR(cotizacion: EditableDocument): void {
+    if (!cotizacion.qrCodeUrl) {
+      this.showError('No hay código QR para descargar');
+      return;
+    }
+
+    const link = document.createElement('a');
+    link.download = `cotizacion-${cotizacion.id}.png`;
+    link.href = cotizacion.qrCodeUrl;
+    link.click();
+  }
+
+  public limpiarQR(cotizacion: EditableDocument): void {
+    cotizacion.qrCodeUrl = undefined;
+  }
+
+  // --- Método de prueba temporal ---
+  public probarQR(): void {
+    if (this.cotizaciones.length > 0) {
+      const primeraCotizacion = this.cotizaciones[0];
+      this.generarQR(primeraCotizacion);
+      this.showSuccess('Probando generación de QR con la primera cotización');
+    } else {
+      this.showError('No hay cotizaciones para probar');
     }
   }
 

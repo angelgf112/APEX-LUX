@@ -41,3 +41,17 @@ testem.log
 .DS_Store
 Thumbs.db
 package-lock.zip
+
+# Firebase configuration files (sensitive data)
+backend/firebase-service-account-key.json
+src/environments/environment.prod.ts
+*.env
+.env.local
+.env.production
+
+# Backend node_modules
+backend/node_modules/
+
+# Large files
+*.zip
+soloFaltaInput.zip

@@ -1,8 +1,37 @@
 <!-- admin-panel.component.html -->
 
+<!-- PANTALLA DE CARGA -->
+@if (isLoading) {
+<div class="loading-screen">
+  <div class="loading-content">
+    <mat-spinner diameter="60"></mat-spinner>
+    <h2>Cargando Panel de Administración...</h2>
+    <p>Obteniendo datos de Firebase</p>
+  </div>
+</div>
+} @else {
+
 <!-- SECCIÓN DE COTIZACIONES -->
 <h2>Cotizaciones</h2>
-@if (cotizaciones.length > 0) {
+
+<!-- Botón de prueba temporal -->
+<div style="margin-bottom: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px;">
+  <button 
+    mat-raised-button 
+    color="primary" 
+    (click)="probarQR()"
+    style="margin-right: 10px;">
+    🧪 Probar Generación QR
+  </button>
+  <span style="color: #666; font-size: 0.9em;">Botón de prueba para verificar que el QR funciona</span>
+</div>
+
+@if (isLoadingCotizaciones) {
+<div class="section-loading">
+  <mat-spinner diameter="40"></mat-spinner>
+  <p>Cargando cotizaciones...</p>
+</div>
+} @else if (cotizaciones.length > 0) {
 <div class="cards-container">
   @for (cotizacion of cotizaciones; track cotizacion.id) {
   <mat-card class="admin-card">
@@ -61,6 +90,17 @@
       </button>
       <button
         mat-icon-button
+        color="accent"
+        class="qr-button"
+        (click)="generarQR(cotizacion)"
+        [disabled]="cotizacion.isGeneratingQR"
+        aria-label="Generar QR"
+        title="Generar código QR"
+      >
+        <mat-icon>{{ cotizacion.isGeneratingQR ? 'hourglass_empty' : 'qr_code' }}</mat-icon>
+      </button>
+      <button
+        mat-icon-button
         color="warn"
         (click)="deleteCotizacion(cotizacion.id)"
         aria-label="Eliminar cotización"
@@ -69,6 +109,23 @@
       </button>
       }
     </mat-card-actions>
+    
+    <!-- Sección de QR generado -->
+    @if (cotizacion.qrCodeUrl) {
+    <mat-card-content class="qr-section">
+      <div class="qr-container">
+        <img [src]="cotizacion.qrCodeUrl" alt="Código QR" class="qr-image">
+        <div class="qr-actions">
+          <button mat-button color="primary" (click)="descargarQR(cotizacion)">
+            Descargar QR
+          </button>
+          <button mat-button color="warn" (click)="limpiarQR(cotizacion)">
+            Limpiar
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+    }
   </mat-card>
   }
 </div>
@@ -150,4 +207,7 @@
 </div>
 } @else {
 <p>No hay contactos registrados.</p>
+}
+
+<!-- Cierre del bloque else principal -->
 }
