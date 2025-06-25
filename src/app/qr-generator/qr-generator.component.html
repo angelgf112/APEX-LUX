@@ -1,0 +1,167 @@
+<div class="qr-generator-container">
+  <div class="header">
+    <h1>Generador de Códigos QR</h1>
+    <p>Genera códigos QR con datos de cotizaciones desde Firebase</p>
+  </div>
+
+  <!-- Botón de prueba de conexión -->
+  <div class="test-section">
+    <button 
+      mat-raised-button 
+      color="warn" 
+      (click)="probarConexion()"
+      class="test-button">
+      🧪 Probar Conexión Firebase
+    </button>
+  </div>
+
+  <!-- Sección de carga -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Cargando...</p>
+  </div>
+
+  <!-- Sección principal -->
+  <div *ngIf="!isLoading" class="main-content">
+    
+    <!-- Método 1: Seleccionar cotización de la lista -->
+    <mat-card class="method-card">
+      <mat-card-header>
+        <mat-card-title>Método 1: Seleccionar Cotización</mat-card-title>
+        <mat-card-subtitle>Elige una cotización de la lista para generar su QR</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="form-group">
+          <label for="cotizacion-select">Seleccionar Cotización:</label>
+          <mat-select 
+            id="cotizacion-select"
+            [(ngModel)]="cotizacionSeleccionada"
+            placeholder="Elige una cotización">
+            <mat-option *ngFor="let cotizacion of cotizaciones" [value]="cotizacion">
+              {{ cotizacion.cliente }} - {{ cotizacion.vehiculo }} ({{ formatearPrecio(cotizacion.precio) }})
+            </mat-option>
+          </mat-select>
+        </div>
+
+        <div *ngIf="cotizacionSeleccionada" class="cotizacion-details">
+          <h4>Detalles de la Cotización:</h4>
+          <div class="details-grid">
+            <div class="detail-item">
+              <strong>ID:</strong> {{ cotizacionSeleccionada.id }}
+            </div>
+            <div class="detail-item">
+              <strong>Cliente:</strong> {{ cotizacionSeleccionada.cliente }}
+            </div>
+            <div class="detail-item">
+              <strong>Vehículo:</strong> {{ cotizacionSeleccionada.vehiculo }}
+            </div>
+            <div class="detail-item">
+              <strong>Precio:</strong> {{ formatearPrecio(cotizacionSeleccionada.precio) }}
+            </div>
+            <div class="detail-item">
+              <strong>Fecha:</strong> {{ cotizacionSeleccionada.fecha }}
+            </div>
+            <div class="detail-item">
+              <strong>Estado:</strong> 
+              <span [class]="'status-' + cotizacionSeleccionada.estado.toLowerCase()">
+                {{ cotizacionSeleccionada.estado }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            (click)="generarQR()"
+            [disabled]="!cotizacionSeleccionada">
+            Generar QR
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Método 2: Generar QR por ID -->
+    <mat-card class="method-card">
+      <mat-card-header>
+        <mat-card-title>Método 2: Generar por ID</mat-card-title>
+        <mat-card-subtitle>Ingresa el ID de una cotización específica</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="form-group">
+          <label for="cotizacion-id">ID de Cotización:</label>
+          <input 
+            type="text" 
+            id="cotizacion-id"
+            [(ngModel)]="cotizacionSeleccionadaId"
+            placeholder="Ej: 1, 2, 3..."
+            class="form-control">
+        </div>
+
+        <div class="button-group">
+          <button 
+            mat-raised-button 
+            color="accent" 
+            (click)="generarQRPorId()"
+            [disabled]="!cotizacionSeleccionadaId">
+            Generar QR por ID
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Sección de visualización del QR -->
+    <mat-card *ngIf="qrCodeUrl" class="qr-display-card">
+      <mat-card-header>
+        <mat-card-title>Código QR Generado</mat-card-title>
+        <mat-card-subtitle>Escanea este código para ver los datos de la cotización</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="qr-container">
+          <img [src]="qrCodeUrl" alt="Código QR" class="qr-image">
+        </div>
+        
+        <div class="qr-actions">
+          <button mat-raised-button color="primary" (click)="descargarQR()">
+            Descargar QR
+          </button>
+          <button mat-raised-button color="warn" (click)="limpiarQR()">
+            Limpiar
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Lista de cotizaciones disponibles -->
+    <mat-card class="cotizaciones-card">
+      <mat-card-header>
+        <mat-card-title>Cotizaciones Disponibles</mat-card-title>
+        <mat-card-subtitle>Lista de todas las cotizaciones en la base de datos</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="cotizaciones-list">
+          <div *ngFor="let cotizacion of cotizaciones" class="cotizacion-item">
+            <div class="cotizacion-info">
+              <h4>{{ cotizacion.cliente }}</h4>
+              <p><strong>Vehículo:</strong> {{ cotizacion.vehiculo }}</p>
+              <p><strong>Precio:</strong> {{ formatearPrecio(cotizacion.precio) }}</p>
+              <p><strong>Estado:</strong> 
+                <span [class]="'status-' + cotizacion.estado.toLowerCase()">
+                  {{ cotizacion.estado }}
+                </span>
+              </p>
+            </div>
+            <div class="cotizacion-id">
+              <strong>ID: {{ cotizacion.id }}</strong>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div> 

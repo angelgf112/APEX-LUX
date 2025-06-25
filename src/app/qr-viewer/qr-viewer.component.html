@@ -1,0 +1,68 @@
+<div class="qr-viewer-container">
+  <!-- Estado de carga -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Cargando datos de la cotización...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error && !isLoading" class="error-container">
+    <mat-card class="error-card">
+      <mat-card-content>
+        <div class="error-icon">⚠️</div>
+        <h2>Error</h2>
+        <p>{{ error }}</p>
+        <button mat-raised-button color="primary" routerLink="/qr-generator">
+          Volver al Generador
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Datos de la cotización -->
+  <div *ngIf="cotizacion && !isLoading" class="cotizacion-container">
+    <mat-card class="cotizacion-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>receipt</mat-icon>
+          Cotización #{{ cotizacion.id }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Datos obtenidos del código QR
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- Mostrar todos los campos del documento dinámicamente -->
+        <div class="info-section">
+          <h3>Datos Completos de la Cotización</h3>
+          <div class="info-grid">
+            <div *ngFor="let key of getObjectKeys(cotizacion)" class="info-item">
+              <strong>{{ key | titlecase }}:</strong>
+              <span [class]="getValueClass(getValue(cotizacion, key))">
+                {{ formatFieldValue(getValue(cotizacion, key)) }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Información del QR -->
+        <div class="qr-info">
+          <p>
+            <mat-icon>qr_code</mat-icon>
+            Esta información fue obtenida escaneando un código QR generado por Apex Lux Automotive.
+          </p>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" routerLink="/qr-generator">
+          Generar Nuevo QR
+        </button>
+        <button mat-raised-button color="primary" routerLink="/admin-panel">
+          Ir al Panel de Administración
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div> 

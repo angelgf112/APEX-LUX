@@ -46,13 +46,19 @@ export const routes: Routes = [
         (m) => m.AdminPanelComponent
       ),
     title: 'Panel de Administración - ApexAutomotive',
-  },{
-  path: 'admin-graficas',
-  loadComponent: () =>
-    import('./admin-graficas/admin-graficas.component').then(m => m.AdminGraficasComponent),
-  title: 'Gráficas - ApexAutomotive',
-},
-
+  },
+  {
+    path: 'admin-graficas',
+    loadComponent: () =>
+      import('./admin-graficas/admin-graficas.component').then(m => m.AdminGraficasComponent),
+    title: 'Gráficas - ApexAutomotive',
+  },
+  {
+    path: 'qr-viewer/:id',
+    loadComponent: () =>
+      import('./qr-viewer/qr-viewer.component').then((m) => m.QrViewerComponent),
+    title: 'Ver Cotización - ApexAutomotive',
+  },
   {
     path: '**',
     redirectTo: '',

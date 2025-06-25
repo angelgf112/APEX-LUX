@@ -196,6 +196,71 @@ button.mat-button[color="warn"]:hover
     color: #f44336;
 }
 
+/* Estilos para el botón de QR */
+.qr-button {
+  background-color: #2196f3 !important;
+  color: white !important;
+  border-radius: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  margin: 0 4px !important;
+}
+
+.qr-button:hover {
+  background-color: #1976d2 !important;
+  transform: scale(1.1) !important;
+}
+
+.qr-button:disabled {
+  background-color: #ccc !important;
+  color: #666 !important;
+}
+
+/* Estilos para la sección de QR */
+.qr-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.qr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.qr-image {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.qr-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.qr-actions button {
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+}
+
+/* Animación de loading para el botón de QR */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.mat-icon.hourglass_empty {
+  animation: spin 1s linear infinite;
+}
+
 /* Panel de búsqueda/filtro */
 .admin-search
 {
@@ -284,4 +349,52 @@ button.mat-button[color="warn"]:hover
         flex-wrap: wrap;
         justify-content: flex-start;
     }
+}
+
+/* Estilos para la pantalla de carga */
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 15px;
+  margin: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.loading-content {
+  text-align: center;
+  color: white;
+  padding: 40px;
+}
+
+.loading-content h2 {
+  margin: 20px 0 10px 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.loading-content p {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.section-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin: 20px 0;
+  border: 2px dashed #dee2e6;
+}
+
+.section-loading p {
+  margin: 15px 0 0 0;
+  color: #6c757d;
+  font-size: 1rem;
 }
