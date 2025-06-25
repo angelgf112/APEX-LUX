@@ -2,6 +2,7 @@ name: Firebase Hosting CI
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
   push:
     branches:
       - main
@@ -13,8 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy preview on PR
-        if: github.event_name == 'pull_request'
+      - name: Deploy preview (PR)
+        if: github.event_name == 'pull_request' && github.event.pull_request.number != ''
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
@@ -22,10 +23,11 @@ jobs:
           projectId: apex-automotive-9078e
           channelId: pr-${{ github.event.pull_request.number }}
 
-      - name: Deploy to production on main
+      - name: Deploy to production (main)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APEX_AUTOMOTIVE_9078E }}
           projectId: apex-automotive-9078e
+          channelId: live
