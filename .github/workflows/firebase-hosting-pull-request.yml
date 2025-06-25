@@ -20,7 +20,7 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APEX_AUTOMOTIVE_9078E }}
           projectId: apex-automotive-9078e
-          channelId: pr-${{ github.event.number }}
+          channelId: pr-${{ github.event.pull_request.number }}
 
       - name: Deploy to production on main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
